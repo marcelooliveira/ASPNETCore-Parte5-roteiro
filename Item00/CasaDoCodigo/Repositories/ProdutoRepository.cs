@@ -44,9 +44,6 @@ namespace CasaDoCodigo.Repositories
             return new BuscaProdutosViewModel(await query.ToListAsync(), pesquisa);
         }
 
-        //MELHORIA: 1) Métodos assíncronos
-        //Para saber mais: C#: Paralelismo no mundo real
-        //https://cursos.alura.com.br/course/csharp-paralelismo-no-mundo-real/task/27900
         public async Task SaveProdutosAsync(List<Livro> livros)
         {
             await SaveCategorias(livros);

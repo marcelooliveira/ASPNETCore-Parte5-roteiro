@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\**" />
+    <Compile Remove="Migrations\AppIdentity\**" />
+    <Content Remove="Areas\**" />
+    <Content Remove="Migrations\AppIdentity\**" />
+    <EmbeddedResource Remove="Areas\**" />
+    <EmbeddedResource Remove="Migrations\AppIdentity\**" />
+    <None Remove="Areas\**" />
+    <None Remove="Migrations\AppIdentity\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_LoginPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="middlewares.png" />
     <None Remove="pipeline.png" />
     <None Remove="pipeline1.png" />

@@ -9,7 +9,6 @@ namespace CasaDoCodigo.Models
 
         }
 
-        //MELHORIA: 4) Modelo agora inclui categoria
         [Required]
         public Categoria Categoria { get; private set; }
         [Required]

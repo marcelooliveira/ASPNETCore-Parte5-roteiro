@@ -1,5 +1,4 @@
-﻿using CasaDoCodigo.Areas.Identity.Data;
-using CasaDoCodigo.Models;
+﻿using CasaDoCodigo.Models;
 using CasaDoCodigo.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,8 +12,6 @@ using System.Threading.Tasks;
 
 namespace CasaDoCodigo.Repositories
 {
-    //MELHORIA: 6) Repositórios simplificados
-
     public interface IPedidoRepository
     {
         Task<Pedido> GetPedidoAsync();
@@ -23,13 +20,11 @@ namespace CasaDoCodigo.Repositories
         Task<Pedido> UpdateCadastroAsync(Cadastro cadastro);
     }
 
-    //TAREFA 06: INJETAR UserManager PARA OBTER clienteId
     public class PedidoRepository : BaseRepository<Pedido>, IPedidoRepository
     {
         private readonly IHttpContextAccessor contextAccessor;
         private readonly IHttpHelper httpHelper;
         private readonly ICadastroRepository cadastroRepository;
-        private readonly UserManager<AppIdentityUser> userManager;
         private readonly IRelatorioHelper relatorioHelper;
 
         public PedidoRepository(IConfiguration configuration,
@@ -37,13 +32,11 @@ namespace CasaDoCodigo.Repositories
             IHttpContextAccessor contextAccessor,
             IHttpHelper sessionHelper,
             ICadastroRepository cadastroRepository,
-            UserManager<AppIdentityUser> userManager,
             IRelatorioHelper relatorioHelper) : base(configuration, contexto)
         {
             this.contextAccessor = contextAccessor;
             this.httpHelper = sessionHelper;
             this.cadastroRepository = cadastroRepository;
-            this.userManager = userManager;
             this.relatorioHelper = relatorioHelper;
         }
 
@@ -93,8 +86,6 @@ namespace CasaDoCodigo.Repositories
             if (pedido == null)
             {
                 var claimsPrincipal = contextAccessor.HttpContext.User;
-                //var clienteId = userManager.GetUserId(claimsPrincipal);
-
                 var clienteId = claimsPrincipal.FindFirst("sub")?.Value; //subject, ou id do usuário
 
                 pedido = new Pedido(clienteId);

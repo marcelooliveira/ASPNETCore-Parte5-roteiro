@@ -1,5 +1,4 @@
-﻿using CasaDoCodigo.Areas.Identity.Data;
-using CasaDoCodigo.Models;
+﻿using CasaDoCodigo.Models;
 using CasaDoCodigo.Models.ViewModels;
 using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -16,15 +15,12 @@ namespace CasaDoCodigo.Controllers
     {
         private readonly IProdutoRepository produtoRepository;
         private readonly IPedidoRepository pedidoRepository;
-        private readonly UserManager<AppIdentityUser> userManager;
 
         public PedidoController(IProdutoRepository produtoRepository,
-            IPedidoRepository pedidoRepository,
-            UserManager<AppIdentityUser> userManager)
+            IPedidoRepository pedidoRepository)
         {
             this.produtoRepository = produtoRepository;
             this.pedidoRepository = pedidoRepository;
-            this.userManager = userManager;
         }
 
         public async Task<IActionResult> Carrossel()
@@ -32,9 +28,6 @@ namespace CasaDoCodigo.Controllers
             return View(await produtoRepository.GetProdutosAsync());
         }
 
-        //MELHORIA: 2) Nova view de Busca de Produtos
-        //Para saber mais: Formação .NET
-        //https://cursos.alura.com.br/formacao-dotnet
         public async Task<IActionResult> BuscaProdutos(string pesquisa)
         {
             return View(await produtoRepository.GetProdutosAsync(pesquisa));
