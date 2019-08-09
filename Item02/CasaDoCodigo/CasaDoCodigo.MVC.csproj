@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Pedido\BuscaProdutos.cshtml" />
+    <Content Remove="Views\Pedido\Carrinho.cshtml" />
     <Content Remove="Views\Pedido\Carrossel.cshtml" />
     <Content Remove="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
