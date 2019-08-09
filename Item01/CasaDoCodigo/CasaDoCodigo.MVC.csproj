@@ -7,17 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\**" />
+    <Compile Remove="Areas\Identity\**" />
     <Compile Remove="Migrations\AppIdentity\**" />
-    <Content Remove="Areas\**" />
+    <Content Remove="Areas\Identity\**" />
     <Content Remove="Migrations\AppIdentity\**" />
-    <EmbeddedResource Remove="Areas\**" />
+    <EmbeddedResource Remove="Areas\Identity\**" />
     <EmbeddedResource Remove="Migrations\AppIdentity\**" />
-    <None Remove="Areas\**" />
+    <None Remove="Areas\Identity\**" />
     <None Remove="Migrations\AppIdentity\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Pedido\BuscaProdutos.cshtml" />
+    <Content Remove="Views\Pedido\Carrossel.cshtml" />
     <Content Remove="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
 

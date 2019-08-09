@@ -23,16 +23,6 @@ namespace CasaDoCodigo.Controllers
             this.pedidoRepository = pedidoRepository;
         }
 
-        public async Task<IActionResult> Carrossel()
-        {
-            return View(await produtoRepository.GetProdutosAsync());
-        }
-
-        public async Task<IActionResult> BuscaProdutos(string pesquisa)
-        {
-            return View(await produtoRepository.GetProdutosAsync(pesquisa));
-        }
-
         [Authorize]
         public async Task<IActionResult> Carrinho(string codigo)
         {

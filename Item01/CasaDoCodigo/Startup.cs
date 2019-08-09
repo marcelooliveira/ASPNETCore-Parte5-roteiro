@@ -150,6 +150,11 @@ namespace CasaDoCodigo
             app.UseSession();
             app.UseMvc(routes =>
             {
+                routes.MapAreaRoute(
+                    name: "AreaCatalogo",
+                    areaName: "Catalogo",
+                    template: "Catalogo/{controller=Produto}/{action=BuscaProdutos}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Pedido}/{action=BuscaProdutos}/{codigo?}");
