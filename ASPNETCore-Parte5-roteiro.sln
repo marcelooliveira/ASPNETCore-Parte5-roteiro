@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item00 - O Projeto Inicial", "Item00 - O Projeto Inicial", "{F27E3D4C-1B88-402F-AAE3-BF748893E5C2}"
 EndProject
@@ -10,6 +10,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.IdentityServer", "Item00\CasaDoCodigo.IdentityServer\CasaDoCodigo.IdentityServer.csproj", "{C1037E71-8354-4EF8-9A37-9D7EF33B2BC0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.RelatorioWebAPI", "Item00\CasaDoCodigo.RelatorioWebAPI\CasaDoCodigo.RelatorioWebAPI.csproj", "{3D4CEF12-5523-4718-B975-E52025085E73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item01 - Areas", "Item01 - Areas", "{ACD8FD87-92A6-45EF-B9E5-F40803785362}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.MVC", "Item01\CasaDoCodigo\CasaDoCodigo.MVC.csproj", "{0BB69DB4-89ED-4B77-B3F9-1F77A938BFBF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.IdentityServer", "Item01\CasaDoCodigo.IdentityServer\CasaDoCodigo.IdentityServer.csproj", "{44F185E0-A544-4076-8BAB-162DF499E050}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.RelatorioWebAPI", "Item01\CasaDoCodigo.RelatorioWebAPI\CasaDoCodigo.RelatorioWebAPI.csproj", "{BA28F064-DA2E-45E2-9647-87594BC2563A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +37,18 @@ Global
 		{3D4CEF12-5523-4718-B975-E52025085E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D4CEF12-5523-4718-B975-E52025085E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D4CEF12-5523-4718-B975-E52025085E73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BB69DB4-89ED-4B77-B3F9-1F77A938BFBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BB69DB4-89ED-4B77-B3F9-1F77A938BFBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BB69DB4-89ED-4B77-B3F9-1F77A938BFBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BB69DB4-89ED-4B77-B3F9-1F77A938BFBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F185E0-A544-4076-8BAB-162DF499E050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F185E0-A544-4076-8BAB-162DF499E050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F185E0-A544-4076-8BAB-162DF499E050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F185E0-A544-4076-8BAB-162DF499E050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA28F064-DA2E-45E2-9647-87594BC2563A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA28F064-DA2E-45E2-9647-87594BC2563A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA28F064-DA2E-45E2-9647-87594BC2563A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA28F064-DA2E-45E2-9647-87594BC2563A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +57,9 @@ Global
 		{DCF48943-83F5-4E44-B7E1-AE52B67644AB} = {F27E3D4C-1B88-402F-AAE3-BF748893E5C2}
 		{C1037E71-8354-4EF8-9A37-9D7EF33B2BC0} = {F27E3D4C-1B88-402F-AAE3-BF748893E5C2}
 		{3D4CEF12-5523-4718-B975-E52025085E73} = {F27E3D4C-1B88-402F-AAE3-BF748893E5C2}
+		{0BB69DB4-89ED-4B77-B3F9-1F77A938BFBF} = {ACD8FD87-92A6-45EF-B9E5-F40803785362}
+		{44F185E0-A544-4076-8BAB-162DF499E050} = {ACD8FD87-92A6-45EF-B9E5-F40803785362}
+		{BA28F064-DA2E-45E2-9647-87594BC2563A} = {ACD8FD87-92A6-45EF-B9E5-F40803785362}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {398437CA-EB7F-4F16-ACEE-7A7D1534AD08}
