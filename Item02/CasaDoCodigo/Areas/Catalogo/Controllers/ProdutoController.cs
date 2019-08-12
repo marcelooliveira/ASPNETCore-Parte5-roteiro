@@ -13,13 +13,8 @@ namespace CasaDoCodigo.Areas.Catalogo.Controllers
         {
             this.produtoRepository = produtoRepository;
         }
-
-        public async Task<IActionResult> Carrossel()
-        {
-            return View(await produtoRepository.GetProdutosAsync());
-        }
-
-        public async Task<IActionResult> BuscaProdutos(string pesquisa)
+            
+        public async Task<IActionResult> Index(string pesquisa)
         {
             return View(await produtoRepository.GetProdutosAsync(pesquisa));
         }

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using CasaDoCodigo.Models;
+using System.Collections.Generic;
 
-namespace CasaDoCodigo.Models.ViewModels
+namespace CasaDoCodigo.Areas.Catalogo.Models.ViewModels
 {
     public class BuscaProdutosViewModel
     {

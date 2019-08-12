@@ -1,0 +1,37 @@
+﻿@using CasaDoCodigo.Areas.Catalogo.Models.ViewModels;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model BuscaProdutosViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Buscar produtos</h2>
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <form asp-area="catalogo" asp-controller="produto" asp-action="index">
+                        <input type="text" asp-for="@Model" name="pesquisa" value="@Model.Pesquisa"
+                               class="form-control input-lg"
+                               placeholder="categoria ou produto" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </form>
+                    @if (!string.IsNullOrWhiteSpace(Model.Pesquisa))
+                    {
+                        <br />
+                        if (Model.Produtos.Count == 0)
+                        {
+                            <div class="alert alert-danger" role="alert">Nenhum produto encontrado.</div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info" role="alert">@(Model.Produtos.Count) produtos encontrados.</div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

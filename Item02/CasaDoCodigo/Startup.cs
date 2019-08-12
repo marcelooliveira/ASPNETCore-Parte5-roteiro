@@ -153,7 +153,7 @@ namespace CasaDoCodigo
                 routes.MapAreaRoute(
                     name: "AreaCatalogo",
                     areaName: "Catalogo",
-                    template: "Catalogo/{controller=Produto}/{action=BuscaProdutos}/{id?}");
+                    template: "Catalogo/{controller=Produto}/{action=Index}/{pesquisa?}");
 
                 routes.MapAreaRoute(
                     name: "AreaCarrinho",
@@ -167,7 +167,7 @@ namespace CasaDoCodigo
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Pedido}/{action=BuscaProdutos}/{codigo?}");
+                    template: "Catalogo/{controller=Produto}/{action=Index}/{pesquisa?}");
             });
 
             var dataService = serviceProvider.GetRequiredService<IDataService>();
