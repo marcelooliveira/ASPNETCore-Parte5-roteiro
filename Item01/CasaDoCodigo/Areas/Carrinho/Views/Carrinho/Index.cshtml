@@ -1,5 +1,8 @@
-﻿@{
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using CasaDoCodigo.Models.ViewModels;
+@{
     ViewData["Title"] = "Carrinho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model CarrinhoViewModel;
 
@@ -14,7 +17,7 @@
             <a class="btn btn-success" asp-area="catalogo" asp-controller="produto" asp-action="buscaprodutos">
                 Adicionar Produtos
             </a>
-            <a class="btn btn-success" asp-action="cadastro">
+            <a class="btn btn-success" asp-area="cadastro" asp-controller="cadastro" asp-action="index">
                 Preencher Cadastro
             </a>
         </div>
@@ -59,8 +62,8 @@
                             </button>
                         </span>
                         <input type="text" value="@(item.Quantidade)"
-                               class="form-control text-center" 
-                               onblur="carrinho.updateQuantidade(this)"/>
+                               class="form-control text-center"
+                               onblur="carrinho.updateQuantidade(this)" />
                         <span class="input-group-btn">
                             <button class="btn btn-default"
                                     onclick="carrinho.clickIncremento(this)">
@@ -102,7 +105,7 @@
             <a class="btn btn-success" asp-area="catalogo" asp-controller="produto" asp-action="buscaprodutos">
                 Adicionar Produtos
             </a>
-            <a class="btn btn-success" asp-action="cadastro">
+            <a class="btn btn-success" asp-area="cadastro" asp-controller="cadastro" asp-action="index">
                 Preencher Cadastro
             </a>
         </div>

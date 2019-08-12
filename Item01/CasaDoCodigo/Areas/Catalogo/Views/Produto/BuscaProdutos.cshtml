@@ -1,5 +1,4 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using CasaDoCodigo.Models;
 @using CasaDoCodigo.Models.ViewModels;
 @{
     ViewData["Title"] = "Busca de Produtos";
@@ -75,9 +74,7 @@
                                         <div class="produto-nome">@produto.Nome</div>
                                         <div><h4><strong>R$ @produto.Preco</strong></h4></div>
                                         <div class="text-center">
-                                            <a asp-area=""
-                                               asp-controller="pedido"
-                                               asp-action="carrinho"
+                                            <a asp-area="carrinho" asp-controller="carrinho" asp-action="index"
                                                asp-route-codigo="@(produto.Codigo)"
                                                class="btn btn-success">Adicionar</a>
                                         </div>
