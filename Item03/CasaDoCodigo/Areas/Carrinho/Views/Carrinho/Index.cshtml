@@ -1,0 +1,30 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, CasaDoCodigo.MVC
+@using CasaDoCodigo.Models.ViewModels;
+
+@{
+    ViewData["Title"] = "Carrinho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model CarrinhoViewModel;
+
+<h3>Meu Carrinho</h3>
+
+<form method="post" asp-action="index">
+</form>
+
+<partial name="_CarrinhoControles" />
+
+
+<br />
+
+<vc:carrinho-list carrinho-view-model="@Model" eh-resumo="false"/>
+
+<partial name="_CarrinhoControles" />
+
+@section Scripts
+{
+    <script src="~/js/carrinho.js">
+
+    </script>
+}
