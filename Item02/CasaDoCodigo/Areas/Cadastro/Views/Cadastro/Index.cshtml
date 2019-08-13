@@ -1,4 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, CasaDoCodigo.MVC
 @using CasaDoCodigo.Models;
 @{
     ViewData["Title"] = "Cadastro";
@@ -9,8 +10,7 @@
 
 <h3>Cadastro</h3>
 
-<form asp-area="" asp-controller="pedido" asp-action="resumo" method="post">
-
+<form asp-area="resumo" asp-controller="resumo" asp-action="index" method="post">
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-md-4">
