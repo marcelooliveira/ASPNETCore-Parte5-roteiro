@@ -12,7 +12,14 @@ namespace CasaDoCodigo.Models.ViewModels
             Itens = itens;
         }
 
+        public CarrinhoViewModel(IList<ItemPedido> itens, bool ehResumo)
+        {
+            Itens = itens;
+            EhResumo = ehResumo;
+        }
+
         public IList<ItemPedido> Itens { get; }
+        public bool EhResumo { get; set; }
 
         public decimal Total => Itens.Sum(i => i.Quantidade * i.PrecoUnitario);
     }

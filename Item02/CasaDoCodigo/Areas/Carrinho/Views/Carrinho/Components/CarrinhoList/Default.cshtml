@@ -1,0 +1,49 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, CasaDoCodigo.MVC
+            
+@using CasaDoCodigo.Models.ViewModels;
+@model CarrinhoViewModel;
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+
+        <div class="row">
+            <div class="col-md-6">
+                Item
+            </div>
+            <div class="col-md-2 text-center">
+                Preço Unitário
+            </div>
+            <div class="col-md-2 text-center">
+                Quantidade
+            </div>
+            <div class="col-md-2">
+                <span class="pull-right">
+                    Subtotal
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        @foreach (var item in Model.Itens)
+        {
+            <vc:carrinho-item item="@item" eh-resumo="@Model.EhResumo"></vc:carrinho-item>
+        }
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-10">
+                <span numero-itens>
+                    Total: @(Model.Itens.Count())
+                    itens
+                </span>
+            </div>
+            <div class="col-md-2">
+                Total: R$ <span class="pull-right" total>
+                    @(Model.Total)
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
