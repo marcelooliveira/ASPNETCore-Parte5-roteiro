@@ -1,4 +1,6 @@
-﻿using CasaDoCodigo.Repositories;
+﻿using CasaDoCodigo.Areas.Catalogo.Data;
+using CasaDoCodigo.Areas.Catalogo.Repositories;
+using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,39 +41,10 @@ namespace CasaDoCodigo
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-            string connectionString = Configuration.GetConnectionString("Default");
+            ConfigurarBancoSQL<ApplicationContext>(services, "Default");
+            ConfigurarBancoSQL<CatalogoDbContext>(services, "Catalogo");
 
-            //DB 2): Configuração EF+Sql Server
-            #region Configuração EF+Sql Server
-            //O banco de dados SQL Server
-            //armazena dados do e-commerce
-            //(produtos, pedidos, cadastro, etc.)
-            //vide SQL Server Object Explorer 
-            #endregion
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(connectionString)
-            );
-
-            //DB 3): Identity + SQLite
-            #region SQLite
-            //1.Relacional
-            //2.Usa linguagem SQL 
-            //3.pequeno
-            //4.rápido
-            //5.independente
-            //6.confiável
-            //7.cheio de recursos.
-            //8.mais usado no mundo 
-            //https://www.sqlite.org/index.html
-            #endregion
-
-            //DB 4): EF + SQLite?
-            #region EF com outros bancos
-            //O Entity Framework pode trabalhar com
-            //diversos bancos de dados
-            //https://docs.microsoft.com/pt-br/ef/core/providers/index
-            #endregion
-
+            services.AddTransient<ISeedCatalogo, SeedCatalogo>();
             services.AddTransient<IDataService, DataService>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IHttpHelper, HttpHelper>();
@@ -79,21 +52,6 @@ namespace CasaDoCodigo
             services.AddTransient<IPedidoRepository, PedidoRepository>();
             services.AddTransient<ICadastroRepository, CadastroRepository>();
             services.AddTransient<IRelatorioHelper, RelatorioHelper>();
-
-            //HABILITE ESTAS LINHAS ABAIXO APENAS
-            //APÓS CONFIGURAR SUA APLICAÇÃO NA MICROSOFT E NO GOOGLE.
-
-            //services.AddAuthentication()
-            //    .AddMicrosoftAccount(options =>
-            //    {
-            //        options.ClientId = Configuration["ExternalLogin:Microsoft:ClientId"];
-            //        options.ClientSecret = Configuration["ExternalLogin:Microsoft:ClientSecret"];
-            //    })
-            //    .AddGoogle(options =>
-            //    {
-            //        options.ClientId = Configuration["ExternalLogin:Google:ClientId"];
-            //        options.ClientSecret = Configuration["ExternalLogin:Google:ClientSecret"];
-            //    });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -123,6 +81,13 @@ namespace CasaDoCodigo
             services.AddHttpClient<IRelatorioHelper, RelatorioHelper>();
         }
 
+        private void ConfigurarBancoSQL<T>(IServiceCollection services, string connectionStringName) where T: DbContext
+        {
+            string connectionString = Configuration.GetConnectionString(connectionStringName);
+            services.AddDbContext<T>(options =>
+                options.UseSqlServer(connectionString)
+            );
+        }
 
         // Este método é chamado pelo runtime.
         // Use este método para configurar o pipeline de requisições HTTP.
@@ -174,6 +139,9 @@ namespace CasaDoCodigo
                     name: "default",
                     template: "Catalogo/{controller=Produto}/{action=Index}/{pesquisa?}");
             });
+
+            var seedCatalogo = serviceProvider.GetRequiredService<ISeedCatalogo>();
+            seedCatalogo.InicializaDBAsync(serviceProvider).Wait();
 
             var dataService = serviceProvider.GetRequiredService<IDataService>();
             dataService.InicializaDBAsync(serviceProvider).Wait();

@@ -10,7 +10,7 @@ namespace CasaDoCodigo
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext(DbContextOptions options) : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }
 

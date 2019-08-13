@@ -1,4 +1,4 @@
-﻿using CasaDoCodigo.Repositories;
+﻿using CasaDoCodigo.Areas.Catalogo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
