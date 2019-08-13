@@ -126,7 +126,7 @@ namespace CasaDoCodigo.Repositories
             var pedido = await GetPedidoAsync();
             await cadastroRepository.UpdateAsync(pedido.Cadastro.Id, cadastro);
             httpHelper.ResetPedidoId();
-            await relatorioHelper.GerarRelatorio(pedido);
+            //await relatorioHelper.GerarRelatorio(pedido);
             return pedido;
         }
 
