@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Busca de Produtos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using  CasaDoCodigo.Models.ViewModels;
 @model BuscaProdutosViewModel;
 
 <div class="container">
@@ -10,7 +13,9 @@
             <h2>Buscar produtos</h2>
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
-                    <form asp-action="buscaprodutos">
+                    <form asp-area="Catalogo"                                               
+                          asp-controller="Home" 
+                          asp-action="Index">
                         <input type="text" asp-for="@Model.Pesquisa" name="pesquisa"
                                class="form-control input-lg"
                                placeholder="categoria ou produto" />
@@ -71,7 +76,9 @@
                                         <div class="produto-nome">@produto.Nome</div>
                                         <div><h4><strong>R$ @produto.Preco</strong></h4></div>
                                         <div class="text-center">
-                                            <a asp-action="carrinho"
+                                            <a asp-area=""                  
+                                               asp-controller="pedido"
+                                               asp-action="carrinho"
                                                asp-route-codigo="@produto.Codigo"
                                                class="btn btn-success">Adicionar</a>
                                         </div>

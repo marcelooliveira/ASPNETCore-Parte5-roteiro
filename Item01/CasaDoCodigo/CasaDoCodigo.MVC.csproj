@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Areas\Catalogo\Controllers\HomeController.cs" />
     <Compile Include="Areas\Identity\Data\AppIdentityContext.cs" />
     <Compile Include="Areas\Identity\Data\AppIdentityUser.cs" />
     <Compile Include="Areas\Identity\IdentityHostingStartup.cs" />
@@ -55,14 +56,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Catalogo\Controllers\" />
     <Folder Include="Areas\Catalogo\Data\" />
     <Folder Include="Areas\Catalogo\Models\" />
-    <Folder Include="Areas\Catalogo\Views\" />
     <Folder Include="wwwroot\images\produtos\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Catalogo\Views\Home\Index.cshtml" />
     <None Include="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Login.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Logout.cshtml" />

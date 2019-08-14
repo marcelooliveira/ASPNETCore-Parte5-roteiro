@@ -30,11 +30,6 @@ namespace CasaDoCodigo.Controllers
             return View(await produtoRepository.GetProdutosAsync());
         }
 
-        public async Task<IActionResult> BuscaProdutos(string pesquisa)
-        {
-            return View(await produtoRepository.GetProdutosAsync(pesquisa));
-        }
-
         [Authorize]
         public async Task<IActionResult> Carrinho(string codigo)
         {
