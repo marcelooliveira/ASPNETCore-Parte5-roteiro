@@ -55,6 +55,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Catalogo\Controllers\" />
+    <Folder Include="Areas\Catalogo\Data\" />
+    <Folder Include="Areas\Catalogo\Models\" />
+    <Folder Include="Areas\Catalogo\Views\" />
     <Folder Include="wwwroot\images\produtos\" />
   </ItemGroup>
 
