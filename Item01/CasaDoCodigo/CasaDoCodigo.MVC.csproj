@@ -38,6 +38,7 @@
     <Compile Include="Areas\Identity\Pages\Account\Logout.cshtml.cs" />
     <Compile Include="Areas\Identity\Pages\Account\Manage\ManageNavPages.cs" />
     <Compile Include="Areas\Identity\Pages\Account\Register.cshtml.cs" />
+    <Compile Include="Areas\Pedido\Controllers\HomeController.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +65,8 @@
     <Folder Include="Areas\Carrinho\Models\" />
     <Folder Include="Areas\Catalogo\Data\" />
     <Folder Include="Areas\Catalogo\Models\" />
+    <Folder Include="Areas\Pedido\Data\" />
+    <Folder Include="Areas\Pedido\Models\" />
     <Folder Include="wwwroot\images\produtos\" />
   </ItemGroup>
 
@@ -81,6 +84,7 @@
     <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+    <None Include="Areas\Pedido\Views\Home\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
