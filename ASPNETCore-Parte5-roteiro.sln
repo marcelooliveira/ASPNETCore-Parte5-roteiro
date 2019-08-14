@@ -11,25 +11,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.IdentityServer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.RelatorioWebAPI", "Item00\CasaDoCodigo.RelatorioWebAPI\CasaDoCodigo.RelatorioWebAPI.csproj", "{3D4CEF12-5523-4718-B975-E52025085E73}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item01 - Areas", "Item01 - Areas", "{ACD8FD87-92A6-45EF-B9E5-F40803785362}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item11 - Areas", "Item11 - Areas", "{ACD8FD87-92A6-45EF-B9E5-F40803785362}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.MVC", "Item01\CasaDoCodigo\CasaDoCodigo.MVC.csproj", "{0BB69DB4-89ED-4B77-B3F9-1F77A938BFBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.MVC", "Item11\CasaDoCodigo\CasaDoCodigo.MVC.csproj", "{0BB69DB4-89ED-4B77-B3F9-1F77A938BFBF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.IdentityServer", "Item01\CasaDoCodigo.IdentityServer\CasaDoCodigo.IdentityServer.csproj", "{44F185E0-A544-4076-8BAB-162DF499E050}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.IdentityServer", "Item11\CasaDoCodigo.IdentityServer\CasaDoCodigo.IdentityServer.csproj", "{44F185E0-A544-4076-8BAB-162DF499E050}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.RelatorioWebAPI", "Item01\CasaDoCodigo.RelatorioWebAPI\CasaDoCodigo.RelatorioWebAPI.csproj", "{BA28F064-DA2E-45E2-9647-87594BC2563A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.RelatorioWebAPI", "Item11\CasaDoCodigo.RelatorioWebAPI\CasaDoCodigo.RelatorioWebAPI.csproj", "{BA28F064-DA2E-45E2-9647-87594BC2563A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item02 - Componentes de Layout", "Item02 - Componentes de Layout", "{941DC7FB-84F9-4BD4-8AFC-6BFC723A0610}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item12 - Componentes de Layout", "Item12 - Componentes de Layout", "{941DC7FB-84F9-4BD4-8AFC-6BFC723A0610}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.MVC", "Item02\CasaDoCodigo\CasaDoCodigo.MVC.csproj", "{EF3A7F15-C123-4268-B793-94A29AD8C70A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.MVC", "Item12\CasaDoCodigo\CasaDoCodigo.MVC.csproj", "{EF3A7F15-C123-4268-B793-94A29AD8C70A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.IdentityServer", "Item02\CasaDoCodigo.IdentityServer\CasaDoCodigo.IdentityServer.csproj", "{9B758242-8B5F-4B4B-B6E8-C8FCA623CAB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.IdentityServer", "Item12\CasaDoCodigo.IdentityServer\CasaDoCodigo.IdentityServer.csproj", "{9B758242-8B5F-4B4B-B6E8-C8FCA623CAB6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item03 - Separação de Modelos", "Item03 - Separação de Modelos", "{5D1C302B-A198-4425-8E06-FEFEE046EDBD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item13 - Separação de Modelos", "Item13 - Separação de Modelos", "{5D1C302B-A198-4425-8E06-FEFEE046EDBD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.MVC", "Item03\CasaDoCodigo\CasaDoCodigo.MVC.csproj", "{17430AD1-9EFD-481F-8EBD-B30BEDE946F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.MVC", "Item13\CasaDoCodigo\CasaDoCodigo.MVC.csproj", "{17430AD1-9EFD-481F-8EBD-B30BEDE946F2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.IdentityServer", "Item03\CasaDoCodigo.IdentityServer\CasaDoCodigo.IdentityServer.csproj", "{725BB729-C51E-4A4A-A16B-EAF7A3475D3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.IdentityServer", "Item13\CasaDoCodigo.IdentityServer\CasaDoCodigo.IdentityServer.csproj", "{725BB729-C51E-4A4A-A16B-EAF7A3475D3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
