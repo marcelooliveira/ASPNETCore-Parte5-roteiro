@@ -35,7 +35,7 @@
         headers['RequestVerificationToken'] = token;
 
         $.ajax({
-            url: '/pedido/updatequantidade',
+            url: '/carrinho/home/updatequantidade',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
