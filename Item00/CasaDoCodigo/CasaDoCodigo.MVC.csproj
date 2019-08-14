@@ -18,16 +18,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Shared\_LoginPartial.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="middlewares.png" />
     <None Remove="pipeline.png" />
     <None Remove="pipeline1.png" />
     <None Remove="pipeline2.png" />
     <None Remove="pipeline3.png" />
     <None Remove="pipeline4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Areas\Identity\Data\AppIdentityContext.cs" />
+    <Compile Include="Areas\Identity\Data\AppIdentityUser.cs" />
+    <Compile Include="Areas\Identity\IdentityHostingStartup.cs" />
+    <Compile Include="Areas\Identity\Pages\Account\ExternalLogin.cshtml.cs" />
+    <Compile Include="Areas\Identity\Pages\Account\Login.cshtml.cs" />
+    <Compile Include="Areas\Identity\Pages\Account\Logout.cshtml.cs" />
+    <Compile Include="Areas\Identity\Pages\Account\Manage\ManageNavPages.cs" />
+    <Compile Include="Areas\Identity\Pages\Account\Register.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +56,19 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\produtos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Login.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Logout.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Register.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

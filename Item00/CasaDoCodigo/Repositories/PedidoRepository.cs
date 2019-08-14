@@ -1,4 +1,5 @@
-﻿using CasaDoCodigo.Models;
+﻿using CasaDoCodigo.Areas.Identity.Data;
+using CasaDoCodigo.Models;
 using CasaDoCodigo.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -23,21 +24,21 @@ namespace CasaDoCodigo.Repositories
     public class PedidoRepository : BaseRepository<Pedido>, IPedidoRepository
     {
         private readonly IHttpContextAccessor contextAccessor;
+        private readonly UserManager<AppIdentityUser> userManager;
         private readonly IHttpHelper httpHelper;
         private readonly ICadastroRepository cadastroRepository;
-        private readonly IRelatorioHelper relatorioHelper;
 
         public PedidoRepository(IConfiguration configuration,
             ApplicationContext contexto,
             IHttpContextAccessor contextAccessor,
+            UserManager<AppIdentityUser> userManager,
             IHttpHelper sessionHelper,
-            ICadastroRepository cadastroRepository,
-            IRelatorioHelper relatorioHelper) : base(configuration, contexto)
+            ICadastroRepository cadastroRepository) : base(configuration, contexto)
         {
             this.contextAccessor = contextAccessor;
+            this.userManager = userManager;
             this.httpHelper = sessionHelper;
             this.cadastroRepository = cadastroRepository;
-            this.relatorioHelper = relatorioHelper;
         }
 
         public async Task AddItemAsync(string codigo)
@@ -86,7 +87,7 @@ namespace CasaDoCodigo.Repositories
             if (pedido == null)
             {
                 var claimsPrincipal = contextAccessor.HttpContext.User;
-                var clienteId = claimsPrincipal.FindFirst("sub")?.Value; //subject, ou id do usuário
+                var clienteId = userManager.GetUserId(claimsPrincipal);
 
                 pedido = new Pedido(clienteId);
                 await dbSet.AddAsync(pedido);
@@ -126,7 +127,6 @@ namespace CasaDoCodigo.Repositories
             var pedido = await GetPedidoAsync();
             await cadastroRepository.UpdateAsync(pedido.Cadastro.Id, cadastro);
             httpHelper.ResetPedidoId();
-            await relatorioHelper.GerarRelatorio(pedido);
             return pedido;
         }
 
