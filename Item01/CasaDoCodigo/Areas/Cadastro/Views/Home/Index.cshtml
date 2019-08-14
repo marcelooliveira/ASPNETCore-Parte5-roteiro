@@ -1,15 +1,19 @@
 ﻿@{
-	ViewData["Title"] = "Cadastro";
+    ViewData["Title"] = "Cadastro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model Cadastro
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using  CasaDoCodigo.Models;
+@model Cadastro;
 
 <h3>Cadastro</h3>
 
-<form 
-      asp-action="resumo" 
+<form asp-area=""
+      asp-controller="pedido"
+      asp-action="resumo"
       method="post">
-    
+
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-md-4">

@@ -26,31 +26,6 @@ namespace CasaDoCodigo.Controllers
         }
 
 
-        [Authorize]
-        public async Task<IActionResult> Cadastro()
-        {
-            var pedido = await pedidoRepository.GetPedidoAsync();
-
-            if (pedido == null)
-            {
-                return RedirectToAction("Carrossel");
-            }
-
-            var usuario = await userManager.GetUserAsync(this.User);
-
-            pedido.Cadastro.Email = usuario.Email;
-            pedido.Cadastro.Telefone = usuario.Telefone;
-            pedido.Cadastro.Nome = usuario.Nome;
-            pedido.Cadastro.Endereco = usuario.Endereco;
-            pedido.Cadastro.Complemento = usuario.Complemento;
-            pedido.Cadastro.Bairro = usuario.Bairro;
-            pedido.Cadastro.Municipio = usuario.Municipio;
-            pedido.Cadastro.UF = usuario.UF;
-            pedido.Cadastro.CEP = usuario.CEP;
-
-            return View(pedido.Cadastro);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
