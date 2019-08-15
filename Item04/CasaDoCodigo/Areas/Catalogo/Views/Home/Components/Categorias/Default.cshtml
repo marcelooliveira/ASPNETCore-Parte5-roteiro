@@ -1,0 +1,10 @@
+﻿@using CasaDoCodigo.Areas.Catalogo.Models.ViewModels;
+@addTagHelper *, CasaDoCodigo.MVC
+@model CategoriasViewModel
+
+<div class="container">
+    @foreach (var categoria in Model.Categorias)
+    {
+        <vc:carrossel categoria="@categoria" produtos="@Model.Produtos" tamanho-pagina="@Model.TamanhoPagina"></vc:carrossel>
+    }
+</div>
