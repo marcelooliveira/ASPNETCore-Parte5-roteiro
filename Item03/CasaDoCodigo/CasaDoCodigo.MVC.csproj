@@ -30,6 +30,18 @@
     <Compile Include="Areas\Cadastro\Controllers\HomeController.cs" />
     <Compile Include="Areas\Carrinho\Controllers\HomeController.cs" />
     <Compile Include="Areas\Catalogo\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Catalogo\Models\ViewModels\BuscaProdutosViewModel.cs" />
+    <Compile Include="Areas\Catalogo\Models\ViewModels\CarrosselPaginaViewModel.cs" />
+    <Compile Include="Areas\Catalogo\Models\ViewModels\CarrosselViewModel.cs" />
+    <Compile Include="Areas\Catalogo\Models\ViewModels\CategoriasViewModel.cs" />
+    <Compile Include="Areas\Catalogo\ViewComponents\CarrosselPaginaViewComponent.cs" />
+    <Compile Include="Areas\Catalogo\ViewComponents\CarrosselViewComponent.cs" />
+    <Compile Include="Areas\Catalogo\ViewComponents\CategoriasViewComponent.cs" />
+    <Compile Include="Areas\Catalogo\ViewComponents\ProdutoCardViewComponent.cs" />
+    <Compile Include="Areas\Catalogo\Views\Home\Components\CarrosselPagina\Default.cshtml.cs" />
+    <Compile Include="Areas\Catalogo\Views\Home\Components\Carrossel\Default.cshtml.cs" />
+    <Compile Include="Areas\Catalogo\Views\Home\Components\Categorias\Default.cshtml.cs" />
+    <Compile Include="Areas\Catalogo\Views\Home\Components\ProdutoCard\Default.cshtml.cs" />
     <Compile Include="Areas\Identity\Data\AppIdentityContext.cs" />
     <Compile Include="Areas\Identity\Data\AppIdentityUser.cs" />
     <Compile Include="Areas\Identity\IdentityHostingStartup.cs" />
@@ -43,6 +55,18 @@
 
   <ItemGroup>
     <Content Include="..\..\..\_Recursos\produtos\livros.txt" Link="wwwroot\images\produtos\livros.txt" />
+    <Content Include="Areas\Catalogo\Views\Home\Components\CarrosselPagina\Default.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Areas\Catalogo\Views\Home\Components\Carrossel\Default.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Areas\Catalogo\Views\Home\Components\Categorias\Default.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Areas\Catalogo\Views\Home\Components\ProdutoCard\Default.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -64,7 +88,6 @@
     <Folder Include="Areas\Carrinho\Data\" />
     <Folder Include="Areas\Carrinho\Models\" />
     <Folder Include="Areas\Catalogo\Data\" />
-    <Folder Include="Areas\Catalogo\Models\" />
     <Folder Include="Areas\Pedido\Data\" />
     <Folder Include="Areas\Pedido\Models\" />
     <Folder Include="wwwroot\images\produtos\" />
