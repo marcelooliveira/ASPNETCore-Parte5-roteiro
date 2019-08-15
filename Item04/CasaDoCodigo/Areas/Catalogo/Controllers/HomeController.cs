@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CasaDoCodigo.Repositories;
+﻿using System.Threading.Tasks;
+using CasaDoCodigo.Areas.Catalogo.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,7 +19,7 @@ namespace CasaDoCodigo.Areas.Catalogo.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> Index(string pesquisa)
         {
-            return View("/Areas/Catalogo/Views/Home/Index.cshtml", await produtoRepository.GetProdutosAsync(pesquisa));
+            return View(await produtoRepository.GetProdutosAsync(pesquisa));
         }
     }
 }
