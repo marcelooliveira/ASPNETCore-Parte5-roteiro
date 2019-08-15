@@ -17,6 +17,7 @@ namespace CasaDoCodigo.Repositories
 
     public class ProdutoRepository : BaseRepository<Produto>, IProdutoRepository
     {
+        static List<Produto> listaProdutos;
         public ProdutoRepository(IConfiguration configuration,
             ApplicationContext contexto) : base(configuration, contexto)
         {
@@ -31,17 +32,28 @@ namespace CasaDoCodigo.Repositories
 
         public async Task<BuscaProdutosViewModel> GetProdutosAsync(string pesquisa)
         {
-            IQueryable<Produto> query = dbSet;
+            if (listaProdutos == null)
+            {
+                listaProdutos =
+                    await dbSet
+                        .Include(prod => prod.Categoria)
+                        .ToListAsync();
+            }
+
+            var resultado = listaProdutos;
 
             if (!string.IsNullOrEmpty(pesquisa))
             {
-                query = query.Where(q => q.Nome.Contains(pesquisa));
+                pesquisa = pesquisa.ToLower();
+                resultado =
+                    listaProdutos
+                        .Where(q =>
+                        q.Nome.ToLower().Contains(pesquisa)
+                        || q.Categoria.Nome.ToLower().Contains(pesquisa))
+                        .ToList();
             }
 
-            query = query
-                .Include(prod => prod.Categoria);
-
-            return new BuscaProdutosViewModel(await query.ToListAsync(), pesquisa);
+            return new BuscaProdutosViewModel(resultado, pesquisa);
         }
 
         public async Task SaveProdutosAsync(List<Livro> livros)

@@ -22,7 +22,7 @@ namespace CasaDoCodigo.Areas.Catalogo.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> Index(string pesquisa)
         {
-            return View(await produtoRepository.GetProdutosAsync(pesquisa));
+            return View("/Areas/Catalogo/Views/Home/Index.cshtml", await produtoRepository.GetProdutosAsync(pesquisa));
         }
     }
 }

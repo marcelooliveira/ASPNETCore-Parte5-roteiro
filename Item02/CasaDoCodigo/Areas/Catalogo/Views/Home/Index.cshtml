@@ -7,29 +7,7 @@
 @using  CasaDoCodigo.Models.ViewModels;
 @model BuscaProdutosViewModel;
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Buscar produtos</h2>
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <form asp-area="Catalogo"                                               
-                          asp-controller="Home" 
-                          asp-action="Index">
-                        <input type="text" asp-for="@Model.Pesquisa" name="pesquisa"
-                               class="form-control input-lg"
-                               placeholder="categoria ou produto" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-info btn-lg" type="submit">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                        </span>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<partial name="_FormularioBusca" />
 
 @{
     var produtos = Model.Produtos;
@@ -66,24 +44,7 @@
                         }
                         @foreach (var produto in produtosDaPagina)
                         {
-
-                            <div class="col-md-3 col-sm-3 col-lg-3">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <img class="img-produto-carrossel center-block" src="/images/produtos/large_@(produto.Codigo).jpg" />
-                                    </div>
-                                    <div class="panel-footer produto-footer">
-                                        <div class="produto-nome">@produto.Nome</div>
-                                        <div><h4><strong>R$ @produto.Preco</strong></h4></div>
-                                        <div class="text-center">
-                                            <a asp-area="carrinho"                  
-                                               asp-action="index"
-                                               asp-route-codigo="@produto.Codigo"
-                                               class="btn btn-success">Adicionar</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <partial name="_ProdutoCart" model="@produto" />
                         }
                     </div>
                 </div>
