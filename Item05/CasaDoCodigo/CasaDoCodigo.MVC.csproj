@@ -31,9 +31,14 @@
     <Compile Include="Areas\Carrinho\Controllers\HomeController.cs" />
     <Compile Include="Areas\Catalogo\Controllers\HomeController.cs" />
     <Compile Include="Areas\Catalogo\Data\CatalogoDbContext.cs" />
-    <Compile Include="Areas\Catalogo\Data\Migrations\20190816154442_AreaCatalogo.cs" />
-    <Compile Include="Areas\Catalogo\Data\Migrations\20190816154442_AreaCatalogo.Designer.cs" />
+    <Compile Include="Areas\Catalogo\Data\Migrations\20190816164225_AreaCatalogo.cs" />
+    <Compile Include="Areas\Catalogo\Data\Migrations\20190816164225_AreaCatalogo.Designer.cs" />
     <Compile Include="Areas\Catalogo\Data\Migrations\CatalogoDbContextModelSnapshot.cs" />
+    <Compile Include="Areas\Catalogo\Data\Repositories\BaseRepository.cs" />
+    <Compile Include="Areas\Catalogo\Data\Repositories\ProdutoRepository.cs" />
+    <Compile Include="Areas\Catalogo\Models\BaseModel.cs" />
+    <Compile Include="Areas\Catalogo\Models\Categoria.cs" />
+    <Compile Include="Areas\Catalogo\Models\Produto.cs" />
     <Compile Include="Areas\Catalogo\Models\ViewModels\BuscaProdutosViewModel.cs" />
     <Compile Include="Areas\Catalogo\Models\ViewModels\CarrosselPaginaViewModel.cs" />
     <Compile Include="Areas\Catalogo\Models\ViewModels\CarrosselViewModel.cs" />

@@ -19,7 +19,7 @@ namespace CasaDoCodigo.Areas.Catalogo.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CasaDoCodigo.Models.Categoria", b =>
+            modelBuilder.Entity("CasaDoCodigo.Areas.Catalogo.Models.Categoria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,7 +150,7 @@ namespace CasaDoCodigo.Areas.Catalogo.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CasaDoCodigo.Models.Produto", b =>
+            modelBuilder.Entity("CasaDoCodigo.Areas.Catalogo.Models.Produto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1712,9 +1712,9 @@ namespace CasaDoCodigo.Areas.Catalogo.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CasaDoCodigo.Models.Produto", b =>
+            modelBuilder.Entity("CasaDoCodigo.Areas.Catalogo.Models.Produto", b =>
                 {
-                    b.HasOne("CasaDoCodigo.Models.Categoria", "Categoria")
+                    b.HasOne("CasaDoCodigo.Areas.Catalogo.Models.Categoria", "Categoria")
                         .WithMany()
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade);

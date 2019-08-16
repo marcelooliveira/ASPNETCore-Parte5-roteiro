@@ -1,4 +1,5 @@
-﻿using CasaDoCodigo.Models;
+﻿using CasaDoCodigo.Repositories;
+using CasaDoCodigo.Models;
 using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

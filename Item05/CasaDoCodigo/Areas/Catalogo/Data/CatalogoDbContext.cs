@@ -1,4 +1,4 @@
-﻿using CasaDoCodigo.Models;
+﻿using CasaDoCodigo.Areas.Catalogo.Models;
 using CasaDoCodigo.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -10,6 +10,12 @@ using System.Threading.Tasks;
 
 namespace CasaDoCodigo.Areas.Catalogo.Data
 {
+    //***OBS***
+    //PARA A AULA 5, 
+    //DROPAR O BANCO
+    //APAGAR AS MIGRAÇÕES
+    //RODAR NOVAMENTE AS MIGRAÇÕES ABAIXO
+
     //PM> Add-Migration "AreaCatalogo" -Context CatalogoDbContext -o "Areas/Catalogo/Data/Migrations"
     //PM> Update-Database -verbose -Context CatalogoDbContext 
     public class CatalogoDbContext : DbContext

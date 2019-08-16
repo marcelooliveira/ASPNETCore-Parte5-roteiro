@@ -1,4 +1,5 @@
 ﻿using CasaDoCodigo.Areas.Catalogo.Data;
+using CasaDoCodigo.Areas.Catalogo.Data.Repositories;
 using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +40,8 @@ namespace CasaDoCodigo
             services.AddTransient<IDataService, DataService>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IHttpHelper, HttpHelper>();
-            services.AddTransient<IProdutoRepository, ProdutoRepository>();
+            services.AddTransient<Repositories.IProdutoRepository, Repositories.ProdutoRepository>();
+            services.AddTransient<Areas.Catalogo.Data.Repositories.IProdutoRepository, Areas.Catalogo.Data.Repositories.ProdutoRepository>();
             services.AddTransient<IPedidoRepository, PedidoRepository>();
             services.AddTransient<ICadastroRepository, CadastroRepository>();
 

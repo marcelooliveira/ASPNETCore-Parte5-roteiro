@@ -1,13 +1,12 @@
-﻿using CasaDoCodigo.Models;
-using CasaDoCodigo.Models.ViewModels;
-using CasaDoCodigo.Repositories;
+﻿using CasaDoCodigo.Areas.Catalogo.Models;
+using CasaDoCodigo.Areas.Catalogo.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CasaDoCodigo.Repositories
+namespace CasaDoCodigo.Areas.Catalogo.Data.Repositories
 {
     public interface IProdutoRepository
     {
@@ -20,7 +19,7 @@ namespace CasaDoCodigo.Repositories
     {
         static List<Produto> listaProdutos;
         public ProdutoRepository(IConfiguration configuration,
-            ApplicationContext contexto) : base(configuration, contexto)
+            CatalogoDbContext contexto) : base(configuration, contexto)
         {
         }
 
@@ -35,7 +34,7 @@ namespace CasaDoCodigo.Repositories
         {
             if (listaProdutos == null)
             {
-                listaProdutos = 
+                listaProdutos =
                     await dbSet
                         .Include(prod => prod.Categoria)
                         .ToListAsync();
