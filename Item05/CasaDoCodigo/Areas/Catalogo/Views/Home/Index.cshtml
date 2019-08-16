@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Busca de Produtos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, CasaDoCodigo.MVC
+@using  CasaDoCodigo.Models.ViewModels;
+@model BuscaProdutosViewModel;
+
+<partial name="_FormularioBusca" />
+
+<vc:categorias produtos="@Model.Produtos"></vc:categorias>
