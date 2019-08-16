@@ -110,6 +110,7 @@
     <None Include="Areas\Catalogo\Views\Home\_NavegacaoCarrossel.cshtml" />
     <None Include="Areas\Catalogo\Views\Home\_ProdutoCard.cshtml" />
     <None Include="Areas\Catalogo\Views\Home\_FormularioBusca.cshtml" />
+    <None Include="Areas\_ViewStart.cshtml" />
     <None Include="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Login.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Logout.cshtml" />
