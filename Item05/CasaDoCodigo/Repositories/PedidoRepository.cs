@@ -1,14 +1,13 @@
-﻿using CasaDoCodigo.Areas.Identity.Data;
+﻿using CasaDoCodigo.Areas.Catalogo.Data.Repositories;
+using CasaDoCodigo.Areas.Identity.Data;
 using CasaDoCodigo.Models;
 using CasaDoCodigo.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CasaDoCodigo.Repositories
@@ -27,26 +26,26 @@ namespace CasaDoCodigo.Repositories
         private readonly UserManager<AppIdentityUser> userManager;
         private readonly IHttpHelper httpHelper;
         private readonly ICadastroRepository cadastroRepository;
+        private readonly IProdutoRepository produtoRepository;
 
         public PedidoRepository(IConfiguration configuration,
             ApplicationContext contexto,
             IHttpContextAccessor contextAccessor,
             UserManager<AppIdentityUser> userManager,
             IHttpHelper sessionHelper,
-            ICadastroRepository cadastroRepository) : base(configuration, contexto)
+            ICadastroRepository cadastroRepository,
+            IProdutoRepository produtoRepository) : base(configuration, contexto)
         {
             this.contextAccessor = contextAccessor;
             this.userManager = userManager;
             this.httpHelper = sessionHelper;
             this.cadastroRepository = cadastroRepository;
+            this.produtoRepository = produtoRepository;
         }
 
         public async Task AddItemAsync(string codigo)
         {
-            var produto = await
-                            contexto.Set<Produto>()
-                            .Where(p => p.Codigo == codigo)
-                            .SingleOrDefaultAsync();
+            var produto = await produtoRepository.GetProdutoAsync(codigo);
 
             if (produto == null)
             {
@@ -57,13 +56,13 @@ namespace CasaDoCodigo.Repositories
 
             var itemPedido = await
                                 contexto.Set<ItemPedido>()
-                                .Where(i => i.Produto.Codigo == codigo
+                                .Where(i => i.ProdutoCodigo == codigo
                                         && i.Pedido.Id == pedido.Id)
                                 .SingleOrDefaultAsync();
 
             if (itemPedido == null)
             {
-                itemPedido = new ItemPedido(pedido, produto, 1, produto.Preco);
+                itemPedido = new ItemPedido(pedido, produto.Codigo, produto.Nome, 1, produto.Preco);
                 await
                     contexto.Set<ItemPedido>()
                     .AddAsync(itemPedido);
@@ -78,8 +77,6 @@ namespace CasaDoCodigo.Repositories
             var pedido =
                 await dbSet
                 .Include(p => p.Itens)
-                    .ThenInclude(i => i.Produto)
-                        .ThenInclude(prod => prod.Categoria)
                 .Include(p => p.Cadastro)
                 .Where(p => p.Id == pedidoId)
                 .SingleOrDefaultAsync();

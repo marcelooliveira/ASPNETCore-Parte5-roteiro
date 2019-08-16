@@ -37,11 +37,9 @@ namespace CasaDoCodigo
             ConfigurarContexto<ApplicationContext>(services, "Default");
             ConfigurarContexto<CatalogoDbContext>(services, "Catalogo");
 
-            services.AddTransient<IDataService, DataService>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IHttpHelper, HttpHelper>();
-            services.AddTransient<Repositories.IProdutoRepository, Repositories.ProdutoRepository>();
-            services.AddTransient<Areas.Catalogo.Data.Repositories.IProdutoRepository, Areas.Catalogo.Data.Repositories.ProdutoRepository>();
+            services.AddTransient<IProdutoRepository, ProdutoRepository>();
             services.AddTransient<IPedidoRepository, PedidoRepository>();
             services.AddTransient<ICadastroRepository, CadastroRepository>();
 
@@ -103,9 +101,6 @@ namespace CasaDoCodigo
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{codigo?}");
             });
-
-            var dataService = serviceProvider.GetRequiredService<IDataService>();
-            dataService.InicializaDBAsync(serviceProvider).Wait();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace CasaDoCodigo.Areas.Catalogo.Data.Repositories
     {
         Task SaveProdutosAsync(List<Livro> livros);
         Task<IList<Produto>> GetProdutosAsync();
+        Task<Produto> GetProdutoAsync(string codigo);
         Task<BuscaProdutosViewModel> GetProdutosAsync(string pesquisa);
     }
 
@@ -28,6 +29,14 @@ namespace CasaDoCodigo.Areas.Catalogo.Data.Repositories
             return await dbSet
                 .Include(prod => prod.Categoria)
                 .ToListAsync();
+        }
+
+        public async Task<Produto> GetProdutoAsync(string codigo)
+        {
+            return await dbSet
+                .Where(p => p.Codigo == codigo)
+                .Include(prod => prod.Categoria)
+                .SingleOrDefaultAsync();
         }
 
         public async Task<BuscaProdutosViewModel> GetProdutosAsync(string pesquisa)

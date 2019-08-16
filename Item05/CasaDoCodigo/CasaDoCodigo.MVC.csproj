@@ -18,6 +18,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="DataService.cs" />
+    <Compile Remove="IDataService.cs" />
+    <Compile Remove="Models\Categoria.cs" />
+    <Compile Remove="Models\Produto.cs" />
+    <Compile Remove="Models\ViewModels\BuscaProdutosViewModel.cs" />
+    <Compile Remove="Repositories\ProdutoRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="middlewares.png" />
     <None Remove="pipeline.png" />
     <None Remove="pipeline1.png" />
