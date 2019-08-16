@@ -1,4 +1,5 @@
-﻿using CasaDoCodigo.Repositories;
+﻿using CasaDoCodigo.Areas.Catalogo.Data;
+using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,11 +33,8 @@ namespace CasaDoCodigo
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-            string connectionString = Configuration.GetConnectionString("Default");
-
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(connectionString)
-            );
+            ConfigurarContexto<ApplicationContext>(services, "Default");
+            ConfigurarContexto<CatalogoDbContext>(services, "Catalogo");
 
             services.AddTransient<IDataService, DataService>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
@@ -50,6 +48,14 @@ namespace CasaDoCodigo
             services.AddAuthentication();
         }
 
+        private void ConfigurarContexto<T>(IServiceCollection services, string nomeConexao) where T: DbContext
+        {
+            string connectionString = Configuration.GetConnectionString(nomeConexao);
+
+            services.AddDbContext<T>(options =>
+                options.UseSqlServer(connectionString)
+            );
+        }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             IServiceProvider serviceProvider)

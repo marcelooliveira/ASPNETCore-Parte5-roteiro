@@ -30,6 +30,10 @@
     <Compile Include="Areas\Cadastro\Controllers\HomeController.cs" />
     <Compile Include="Areas\Carrinho\Controllers\HomeController.cs" />
     <Compile Include="Areas\Catalogo\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Catalogo\Data\CatalogoDbContext.cs" />
+    <Compile Include="Areas\Catalogo\Data\Migrations\20190816154442_AreaCatalogo.cs" />
+    <Compile Include="Areas\Catalogo\Data\Migrations\20190816154442_AreaCatalogo.Designer.cs" />
+    <Compile Include="Areas\Catalogo\Data\Migrations\CatalogoDbContextModelSnapshot.cs" />
     <Compile Include="Areas\Catalogo\Models\ViewModels\BuscaProdutosViewModel.cs" />
     <Compile Include="Areas\Catalogo\Models\ViewModels\CarrosselPaginaViewModel.cs" />
     <Compile Include="Areas\Catalogo\Models\ViewModels\CarrosselViewModel.cs" />
@@ -87,7 +91,6 @@
     <Folder Include="Areas\Cadastro\Models\" />
     <Folder Include="Areas\Carrinho\Data\" />
     <Folder Include="Areas\Carrinho\Models\" />
-    <Folder Include="Areas\Catalogo\Data\" />
     <Folder Include="Areas\Pedido\Data\" />
     <Folder Include="Areas\Pedido\Models\" />
     <Folder Include="wwwroot\images\produtos\" />

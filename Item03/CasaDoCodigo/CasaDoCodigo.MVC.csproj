@@ -87,6 +87,7 @@
     <Folder Include="Areas\Cadastro\Models\" />
     <Folder Include="Areas\Carrinho\Data\" />
     <Folder Include="Areas\Carrinho\Models\" />
+    <Folder Include="Areas\Catalogo\Controllers\Repositories\" />
     <Folder Include="Areas\Catalogo\Data\" />
     <Folder Include="Areas\Pedido\Data\" />
     <Folder Include="Areas\Pedido\Models\" />

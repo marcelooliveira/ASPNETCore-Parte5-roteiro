@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using CasaDoCodigo.Areas.Catalogo.Data.Repositories;
+using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

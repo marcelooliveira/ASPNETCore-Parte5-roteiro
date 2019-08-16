@@ -9,6 +9,8 @@ namespace CasaDoCodigo.Models
 
         }
 
+        public int? CategoriaId { get; private set; }
+
         [Required]
         public Categoria Categoria { get; private set; }
         [Required]
@@ -17,6 +19,12 @@ namespace CasaDoCodigo.Models
         public string Nome { get; private set; }
         [Required]
         public decimal Preco { get; private set; }
+
+        public Produto(int id, string codigo, string nome, decimal preco, Categoria categoria) 
+            : this(codigo, nome, preco, categoria)
+        {
+            Id = id;
+        }
 
         public Produto(string codigo, string nome, decimal preco, Categoria categoria)
         {
