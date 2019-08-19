@@ -73,7 +73,7 @@ Vejamos os benefícios da programação modular:
 - Responsabilidade definida pelas equipes / membros
   - Cada equipe ou membro terá uma responsabilidade precisamente predefinida no projeto.
 
-## Vídeo 1.2 Áreas
+## Vídeo 1.2 Controller e Roteamento de Área
 
 A área Catalogo conterá modelos, views e controllers específicos do catálogo de produtos da aplicação.
 
@@ -102,7 +102,6 @@ Porém, o novo método `Index` acima depende de `produtoRepository`, que não exist
 
 
 ```csharp
-[Area("Catalogo")]
 public class HomeController : Controller
 {
     private readonly IProdutoRepository produtoRepository;
@@ -186,6 +185,8 @@ Por outro lado, precisamos garantir que, sempre que o usuário acesse a rota defa
 ```
 
 O método Redirect acima cria um objeto `RedirectResult` que redireciona para a URL "/Catalogo" da área de catálogo, usando o método HTTP 302 (redirect).
+
+![Url Catalogo](url_Catalogo.png)
 
 ### Vídeo 1.3 Correção de links para nova área de catálogo
 
