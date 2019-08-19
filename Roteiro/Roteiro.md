@@ -139,6 +139,8 @@ app.UseMvc(routes =>
 });
 ```
 
+O código a seguir usa MapAreaRoute para criar uma rota de área nomeadas:
+
 **Startup.cs (código alterado)**
 ```csharp
 app.UseMvc(routes =>
@@ -154,6 +156,8 @@ app.UseMvc(routes =>
         template: "{controller=Pedido}/{action=BuscaProdutos}/{codigo?}");
 });
 ```
+
+O método `MapAreaRoute` acima adiciona uma rota ao `IRouteBuilder` com a área MVC especificada com o nome, areaName e template especificados.
 
 Graças ao roteamento de área de catálogo, sempre que o usuário navegar para **localhost:5101/Catalogo**, ele irá acessar a action `Index` de `HomeController` dentro da pasta **Areas/Catalogo**.
 
