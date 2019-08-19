@@ -158,55 +158,21 @@ app.UseMvc(routes =>
 
 Graças ao roteamento de área de catálogo, sempre que o usuário navegar para **localhost:5101/Catalogo**, ele irá acessar a action `Index` de `HomeController` dentro da pasta **Areas/Catalogo**.
 
+Como já movemos o método `BuscaProdutos()` para o novo controller `HomeController` (renomeado como `Index()`), iremos remover o método original de `PedidoController`:
 
+***Arquivo: PedidoController.cs***
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-C:\Users\marce\Documents\GitHub\ASPNETCore-Parte5-roteiro\Item01\CasaDoCodigo\Areas\Catalogo\Views\Home\Index.cshtml
-
-```Razor
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using  CasaDoCodigo.Models.ViewModels;
-```
-.
-.
-.
-
-remover
-<form asp-action="buscaprodutos">
-
-adicionar
-```Razor
-<form asp-area="Catalogo"                                               
-        asp-controller="Home" 
-        asp-action="Index">
+**Remover o método:**
+```csharp
+public async Task<IActionResult> BuscaProdutos(string pesquisa)
+{
+    return View(await produtoRepository.GetProdutosAsync(pesquisa));
+}
 ```
 
-remover
-	<a asp-action="carrinho"
+Por outro lado, precisamos garantir que, sempre que o usuário acesse a rota default **localhost:5101/** (sem área), devemos redirecionar o usuário para a tela de busca de produtos, isto é, para o endereço **localhost:5101/Catalogo/Home/Index**. Vamos implementar o `HomeController` na pasta default **Controllers**: 
 
-adicionar
-```Razor
-	<a asp-area=""                  
-	asp-controller="pedido"
-	asp-action="carrinho"
-```
-
-
-
-C:\Users\marce\Documents\GitHub\ASPNETCore-Parte5-roteiro\Item01\CasaDoCodigo\Controllers\HomeController.cs
+***Arquivo: \Controllers\HomeController.cs***
 
 ```csharp
     public class HomeController : Controller
@@ -217,19 +183,11 @@ C:\Users\marce\Documents\GitHub\ASPNETCore-Parte5-roteiro\Item01\CasaDoCodigo\Co
             return Redirect("/Catalogo");
         }
     }
-
 ```
 
+O método Redirect acima cria um objeto `RedirectResult` que redireciona para a URL "/Catalogo" da área de catálogo, usando o método HTTP 302 (redirect).
 
-PedidoController
-
-Remover:
-```csharp
-public async Task<IActionResult> BuscaProdutos(string pesquisa)
-{
-    return View(await produtoRepository.GetProdutosAsync(pesquisa));
-}
-```
+### Vídeo 1.3 Correção de links para nova área de catálogo
 
 Cadastro.cshtml
 
@@ -286,6 +244,35 @@ adicionar
 <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "Catalog" })" method="post" id="logoutForm" class="navbar-right">
 
 
+C:\Users\marce\Documents\GitHub\ASPNETCore-Parte5-roteiro\Item01\CasaDoCodigo\Areas\Catalogo\Views\Home\Index.cshtml
+
+```Razor
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using  CasaDoCodigo.Models.ViewModels;
+```
+.
+.
+.
+
+remover
+<form asp-action="buscaprodutos">
+
+adicionar
+```Razor
+<form asp-area="Catalogo"                                               
+        asp-controller="Home" 
+        asp-action="Index">
+```
+
+remover
+	<a asp-action="carrinho"
+
+adicionar
+```Razor
+	<a asp-area=""                  
+	asp-controller="pedido"
+	asp-action="carrinho"
+```
 
 
 
