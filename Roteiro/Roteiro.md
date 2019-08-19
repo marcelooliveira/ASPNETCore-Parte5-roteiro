@@ -156,7 +156,152 @@ app.UseMvc(routes =>
 });
 ```
 
-Graças ao roteamento de área de catálogo, agora, sempre que o usuário navegar para **localhost:5101/Catalogo**, ele irá acessar a action `Index` de `HomeController` dentro da pasta **Areas/Catalogo**.
+Graças ao roteamento de área de catálogo, sempre que o usuário navegar para **localhost:5101/Catalogo**, ele irá acessar a action `Index` de `HomeController` dentro da pasta **Areas/Catalogo**.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+C:\Users\marce\Documents\GitHub\ASPNETCore-Parte5-roteiro\Item01\CasaDoCodigo\Areas\Catalogo\Views\Home\Index.cshtml
+
+```Razor
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using  CasaDoCodigo.Models.ViewModels;
+```
+.
+.
+.
+
+remover
+<form asp-action="buscaprodutos">
+
+adicionar
+```Razor
+<form asp-area="Catalogo"                                               
+        asp-controller="Home" 
+        asp-action="Index">
+```
+
+remover
+	<a asp-action="carrinho"
+
+adicionar
+```Razor
+	<a asp-area=""                  
+	asp-controller="pedido"
+	asp-action="carrinho"
+```
+
+
+
+C:\Users\marce\Documents\GitHub\ASPNETCore-Parte5-roteiro\Item01\CasaDoCodigo\Controllers\HomeController.cs
+
+```csharp
+    public class HomeController : Controller
+    {
+        // GET: /<controller>/
+        public IActionResult Index()
+        {
+            return Redirect("/Catalogo");
+        }
+    }
+
+```
+
+
+PedidoController
+
+Remover:
+```csharp
+public async Task<IActionResult> BuscaProdutos(string pesquisa)
+{
+    return View(await produtoRepository.GetProdutosAsync(pesquisa));
+}
+```
+
+Cadastro.cshtml
+
+Remover
+<form asp-action="resumo" method="post">
+
+adicionar
+<form 
+      asp-action="resumo" 
+      method="post">
+
+remover
+<a class="btn btn-success" asp-action="buscaprodutos">
+adicionar
+<a class="btn btn-success" href="/">
+
+
+
+Carrinho.cshtml
+remover
+<a class="btn btn-success" asp-action="buscaprodutos">
+
+adicionar
+<a class="btn btn-success" href="/">
+
+remover
+<a class="btn btn-success" asp-action="buscaprodutos">
+
+adicionar
+<a class="btn btn-success" href="/">
+
+Resumo.cshtml
+
+remover
+<a class="btn btn-success" asp-action="buscaprodutos">
+adicionar
+<a class="btn btn-success" href="/">
+
+
+_Layout.cshtml
+remover
+<a asp-area="" asp-controller="Pedido" asp-action="BuscaProdutos" class="navbar-brand"></a>
+
+adicionar
+<a href="/" class="navbar-brand"></a>
+
+
+
+_LoginPartial.cshtml
+remover
+<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+
+adicionar
+<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "Catalog" })" method="post" id="logoutForm" class="navbar-right">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
