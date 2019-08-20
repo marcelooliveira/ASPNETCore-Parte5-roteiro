@@ -324,6 +324,8 @@ Vamos fazer essa alteração nas views:
 <a class="btn btn-success" asp-area="Catalogo">
 ```
 
+Com essas alterações finais, nossa aplicação voltou a funcionar normalmente como antes. A diferença é que conseguimos organizar e modularizar a área de Catálogo. Você também pode criar as outras áreas do projeto dessa forma (ex.: Carrinho, Cadastro, Resumo, Pedido), deixando a aplicação organizada por grupo de funcionalidades.
+
 
 
 
