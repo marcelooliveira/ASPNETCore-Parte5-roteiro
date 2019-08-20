@@ -1,23 +1,22 @@
 ﻿# 2) Partial Views
 
+## Vídeo 2.1: Apresentando Partial Views
+
 Nossa aplicação está funcionando perfeitamente, porém algumas das nossas views ficaram enormes, dificultando a leitura e compreensão por parte dos desenvolvedores. Além disso, existem vários trechos duplicados de conteúdo dentro das nossas views.
 
 Podemos otimizar nosso código razor dentro das views, extraindo trechos parciais para arquivos separados. Esses arquivos menores podem ser então referenciados dentro dos arquivos de origem. Esses arquivos de trecho são chamados de Views Parciais, ou Partial Views.
+ 
+Vamos dar uma olhada no arquivo da view de carrinho:
 
+Aqui, podemos ver como o trecho abaixo, com os link para Adicionar Produtos e Preencher Cadastro, está sendo repetido 2 vezes:
 
+**arquivo: \Areas\Carrinho\Views\Home\Index.cshtml**
 
-Vamos dar uma olhada no arquivo 
-
-
-
-
-\Areas\Carrinho\Views\Home\Index.cshtml
-
-antes:
+```razor
 <div class="row">
     <div class="col-md-12">
         <div class="pull-right">
-            <a class="btn btn-success" href="/">
+            <a class="btn btn-success" asp-area="catalogo">
                 Adicionar Produtos
             </a>
             <a class="btn btn-success" asp-area="cadastro">
@@ -26,20 +25,18 @@ antes:
         </div>
     </div>
 </div>
+```
 
-depois:
-<partial name="_NavegacaoCarrinho" />
+Para evitar essa duplicação, você pode extrair esse trecho e copiá-lo em um novo arquivo razor, que fará o papel de **view parcial**. Por padrão, o nome do arquivo de view parcial deve começar com um caracter de sublinhado ("_"):
 
+**arquivo: \Areas\Carrinho\Views\Home\_NavegacaoCarrinho.cshtml**
 
-
-\Areas\Carrinho\Views\Home\_NavegacaoCarrinho.cshtml
-
-@@ -0,0 +1,13 @@
+```razor
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <div class="row">
     <div class="col-md-12">
         <div class="pull-right">
-            <a class="btn btn-success" href="/">
+            <a class="btn btn-success" asp-area="catalogo">
                 Adicionar Produtos
             </a>
             <a class="btn btn-success" asp-area="cadastro">
@@ -48,6 +45,21 @@ depois:
         </div>
     </div>
 </div>
+```
+
+No lugar em que esse trecho foi removido do arquivo razor original, devemos adicionar uma tag helper para indicar que nossa nova view parcial deve ser renderizada naquele local.
+
+Isso pode ser feito através da `tag helper <partial>`, indicando o nome da view parcial:
+
+```razor
+<partial name="_NavegacaoCarrinho" />
+```
+
+...ou através de uma `html helper`:
+
+```razor
+@await Html.PartialAsync("_NavegacaoCarrinho")
+```
 
 
 
@@ -60,47 +72,51 @@ depois:
 
 
 
-\Areas\Pedido\Views\Home\Index.cshtml
+
+
+## Vídeo 2.2: Criando outras Partial Views mais Simples
+
+**arquivo: \Areas\Pedido\Views\Home\Index.cshtml**
+```razor
 <div class="row">
     <div class="col-md-12">
         <div class="pull-right">
-            <a class="btn btn-success" href="/">
+            <a class="btn btn-success" asp-area="catalogo">
                 Voltar ao Catálogo
             </a>
         </div>
     </div>
 </div>
+```
+
+```razor
 <partial name="_Navegacao" />
+```
 
 
-\Areas\Pedido\Views\Home\_Navegacao.cshtml
+**arquivo: \Areas\Pedido\Views\Home\_Navegacao.cshtml**
+
+```razor
 @@ -0,0 +1,10 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <div class="row">
     <div class="col-md-12">
         <div class="pull-right">
-            <a class="btn btn-success" href="/">
+            <a class="btn btn-success" asp-area="catalogo">
                 Voltar ao Catálogo
             </a>
         </div>
     </div>
 </div>
+```
 
 
-
-
-
-
-
-
-
-
-
-\Areas\Cadastro\Views\Home\Index.cshtml
+**arquivo: \Areas\Cadastro\Views\Home\Index.cshtml**
 
 antes:
+```razor
 <div class="form-group">
-    <a class="btn btn-success" href="/">
+    <a class="btn btn-success" asp-area="catalogo">
         Continuar Comprando
     </a>
 </div>
@@ -110,16 +126,18 @@ antes:
         Finalizar Pedido
     </button>
 </div>
+```
 
 depois:
+```razor
 <partial name="_Navegacao" />
+```
 
+**arquivo: \Areas\Cadastro\Views\Home\_Navegacao.cshtml**
 
-
-\Areas\Cadastro\Views\Home\_Navegacao.cshtml
-
+```razor
 ﻿<div class="form-group">
-    <a class="btn btn-success" href="/">
+    <a class="btn btn-success" asp-area="catalogo">
         Continuar Comprando
     </a>
 </div>
@@ -129,15 +147,47 @@ depois:
         Finalizar Pedido
     </button>
 </div>
+```
+
+
+#### Resumindo: Declarando views parciais
+
+Uma partial view é um arquivo de marcação .cshtml mantido dentro da pasta Views (MVC) ou Páginas (Razor Pages).
+
+No ASP.NET Core MVC, um ViewResult do controller é capaz de retornar uma view ou uma partial view. 
+
+Ao contrário da view do MVC ou renderização de página, uma partial view não executa _ViewStart.cshtml. Para obter mais informações sobre _ViewStart.cshtml, consulte Layout no ASP.NET Core.
+
+Nomes de arquivos de partial view geralmente começam com um sublinhado (_). Essa convenção de nomenclatura não é obrigatória, mas ajuda a diferenciar visualmente as views parciais das views e das páginas.
 
 
 
 
 
 
-\Areas\Catalogo\Views\Home\Index.cshtml
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Vídeo 2.3: Criando Partial Views mais Complexas
+
+
+**arquivo: \Areas\Catalogo\Views\Home\Index.cshtml**
+
+
+```razor
 <div class="container">
     <div class="row">
         <div class="col-md-4">
@@ -161,13 +211,16 @@ depois:
         </div>
     </div>
 </div>
+```
+
+```razor
 <partial name="_FormularioBusca" />
+```
 
 
+**arquivo: \Areas\Catalogo\Views\Home\_FormularioBusca.cshtml**
 
-\Areas\Catalogo\Views\Home\_FormularioBusca.cshtml
-
-@@ -0,0 +1,26 @@
+```razor
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using  CasaDoCodigo.Models.ViewModels;
 @model BuscaProdutosViewModel;
@@ -194,6 +247,7 @@ depois:
         </div>
     </div>
 </div>
+```
 
 
 
@@ -205,7 +259,7 @@ depois:
 
 
 
-
+```razor
 <div class="col-md-3 col-sm-3 col-lg-3">
     <div class="panel panel-default">
         <div class="panel-body">
@@ -223,10 +277,14 @@ depois:
         </div>
     </div>
 </div>
-<partial name="_ProdutoCard" model="@produto" />
+```
 
-\Areas\Catalogo\Views\Home\_ProdutoCard.cshtml
-@@ -0,0 +1,21 @@
+```razor
+<partial name="_ProdutoCard" model="@produto" />
+```
+
+**arquivo: \Areas\Catalogo\Views\Home\_ProdutoCard.cshtml**
+```razor
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using CasaDoCodigo.Models;
 @model Produto;
@@ -248,43 +306,9 @@ depois:
         </div>
     </div>
 </div>
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Uma partial view é um arquivo Razor ( .cshtml) que renderiza um fragmento de html dentro de outro arquivo razor ou html.
-
-O termo partial view é usado durante o desenvolvimento de um aplicativo MVC, no qual os arquivos de marcação são chamados de views, ou de um aplicativo Razor Pages, no qual os arquivos de marcação são chamados de páginas.
-
-#### Quando usar views parciais?
+#### Resumindo: Quando usar views parciais?
 
 Views parciais são uma maneira eficaz de:
 
@@ -300,13 +324,33 @@ As views parciais não podem ser usadas para manter os elementos de layout comun
 
 Não use uma partial view em que a lógica de renderização complexa ou a execução de código são necessárias para renderizar a marcação. Em vez de uma partial view, use um **view component**.
 
-#### Declarando views parciais
 
-Uma partial view é um arquivo de marcação .cshtml mantido dentro da pasta Views (MVC) ou Páginas (Razor Pages).
 
-No ASP.NET Core MVC, um ViewResult do controller é capaz de retornar uma view ou uma partial view. No Razor Pages, um PageModel pode retornar uma partial view, representada como um objeto PartialViewResult. A referência e a renderização de views parciais são descritas na seção Referenciar uma partial view.
 
-Ao contrário da view do MVC ou renderização de página, uma partial view não executa _ViewStart.cshtml. Para obter mais informações sobre _ViewStart.cshtml, consulte Layout no ASP.NET Core.
 
-Nomes de arquivos de partial view geralmente começam com um sublinhado (_). Essa convenção de nomenclatura não é obrigatória, mas ajuda a diferenciar visualmente as views parciais das views e das páginas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
