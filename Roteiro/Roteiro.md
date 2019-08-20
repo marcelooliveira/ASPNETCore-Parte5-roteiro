@@ -159,7 +159,7 @@ app.UseMvc(routes =>
 
 O método `MapAreaRoute` acima adiciona uma rota ao `IRouteBuilder` com a área MVC especificada com o nome, areaName e template especificados.
 
-Graças ao roteamento de área de catálogo, sempre que o usuário navegar para **localhost:5101/Catalogo**, ele irá acessar a action `Index` de `HomeController` dentro da pasta **Areas/Catalogo**.
+Graças a esse roteamento de área de catálogo, sempre que o usuário navegar para **localhost:5101/Catalogo**, ele irá acessar a action `Index` de `HomeController` dentro da pasta **Areas/Catalogo**.
 
 Como já movemos o método `BuscaProdutos()` para o novo controller `HomeController` (renomeado como `Index()`), iremos remover o método original de `PedidoController`:
 
@@ -194,92 +194,135 @@ O método Redirect acima cria um objeto `RedirectResult` que redireciona para a U
 
 ### Vídeo 1.3 Correção de links para nova área de catálogo
 
-Cadastro.cshtml
+Como estamos realizando mudanças na estrutura de pastas do projeto e no mecanismo de roteamento da aplicação MVC, isso afetará os links e endereços preexistentes em nosso website.
 
-Remover
-<form asp-action="resumo" method="post">
+Precisamos identificar os pontos afetados e corrigir os endereçamentos de rota para que a aplicação continue funcionando normalmente.
 
-adicionar
-<form 
-      asp-action="resumo" 
-      method="post">
+Que pontos são esses?
 
-remover
-<a class="btn btn-success" asp-action="buscaprodutos">
-adicionar
-<a class="btn btn-success" href="/">
+Em primeiro lugar, vamos corrigir o link para a home page do website. Esse link está localizado no logotipo da Casa do Código, mais precisamente no arquivo _Layout.cshtml:
 
+***arquivo: Views/Shared/_Layout.cshtml***
 
+```razor
+<a asp-controller="Pedido" asp-action="BuscaProdutos" class="navbar-brand"></a>
+```
 
-Carrinho.cshtml
-remover
-<a class="btn btn-success" asp-action="buscaprodutos">
+Aqui, vamos remover os atributos asp-controller e asp-action, adicionando o atributo asp-area com o nome da área catalogo:
 
-adicionar
-<a class="btn btn-success" href="/">
+```razor
+<a asp-area="catalogo" class="navbar-brand"></a>
+```
 
-remover
-<a class="btn btn-success" asp-action="buscaprodutos">
-
-adicionar
-<a class="btn btn-success" href="/">
-
-Resumo.cshtml
-
-remover
-<a class="btn btn-success" asp-action="buscaprodutos">
-adicionar
-<a class="btn btn-success" href="/">
+Mas e quanto aos atributos asp-controller e asp-action? Como eles não são mencionados, são assumidos seus valores default: `Home` e `Index`, respectivamente. No final, esse link irá direcionar o usuário para o endereço **localhost:5101/cadastro/home/index**, que devolve a página de busca de produtos. 
 
 
-_Layout.cshtml
-remover
-<a asp-area="" asp-controller="Pedido" asp-action="BuscaProdutos" class="navbar-brand"></a>
+Seguindo a mesma lógica, vamos corrigir o link da *partial view* **Views/Shared/_LoginPartial.cshtml**:
 
-adicionar
-<a href="/" class="navbar-brand"></a>
+**antes:**
 
-
-
-_LoginPartial.cshtml
-remover
 <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
 
-adicionar
-<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "Catalog" })" method="post" id="logoutForm" class="navbar-right">
+**depois:**
 
+<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "Catalog" })" method="post" id="logoutForm" class="navbar-right"> 
 
-C:\Users\marce\Documents\GitHub\ASPNETCore-Parte5-roteiro\Item01\CasaDoCodigo\Areas\Catalogo\Views\Home\Index.cshtml
+Note que o método `Url.Page` acima agora referencia a área Catalogo.
+
+As próximas alterações corrigem a view de busca de produtos (que chamamos de /Catalogo/Home/Index.cshtml):
+
+***arquivo \Catalogo\Views\Home\Index.cshtml***
+
+Vamos adicionar a diretiva `addTagHelper`, que habilita o uso de tag helpers no código razor. Vamos também adicionar o namespace do viewmodel `BuscaProdutosViewModel` que é usado pela view como modelo:
 
 ```Razor
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using  CasaDoCodigo.Models.ViewModels;
+@using CasaDoCodigo.Models.ViewModels;
 ```
-.
-.
-.
 
-remover
+Continuando na mesma view, trocamos o atributo asp-action por um atributo asp-area apontando para a área de catálogo:
+
+**antes:**
+
+```Razor
 <form asp-action="buscaprodutos">
-
-adicionar
-```Razor
-<form asp-area="Catalogo"                                               
-        asp-controller="Home" 
-        asp-action="Index">
 ```
 
-remover
-	<a asp-action="carrinho"
+**depois**
 
-adicionar
 ```Razor
+<form asp-area="Catalogo">
+```
+
+Ainda falta corrigir um link na view de catálogo: aqui, a action de carrinho não tem nenhuma indicação de área. Por isso, precisamos dizer que essa action está numa área "vazia", e no controller `PedidoController`:
+
+**antes**
+```razor
+	<a asp-action="carrinho"
+```
+
+**depois**
+```razor
 	<a asp-area=""                  
 	asp-controller="pedido"
 	asp-action="carrinho"
 ```
 
+A seguir, as outras views também precisam apontar o link para o catálogo mencionando o atributo de área. 
 
+Vamos fazer essa alteração nas views:
+
+- **Cadastro**
+- **Carrinho**
+- **Resumo**
+
+***arquivo Views\Cadastro.cshtml***
+
+**antes**
+
+```razor
+<a class="btn btn-success" asp-action="buscaprodutos">
+```
+
+**depois**
+
+```razor
+<a class="btn btn-success" asp-area="Catalogo">
+```
+
+
+
+***arquivo Views\Carrinho.cshtml***
+**antes**
+```razor
+<a class="btn btn-success" asp-action="buscaprodutos">
+```
+
+**depois**
+```razor
+<a class="btn btn-success" asp-area="Catalogo">
+```
+
+**antes**
+```razor
+<a class="btn btn-success" asp-action="buscaprodutos">
+```
+
+**depois**
+```razor
+<a class="btn btn-success" asp-area="Catalogo">
+```
+
+***arquivo Views\Resumo.cshtml***
+
+**antes**
+```razor
+<a class="btn btn-success" asp-action="buscaprodutos">
+```
+**depois**
+```razor
+<a class="btn btn-success" asp-area="Catalogo">
+```
 
 
 

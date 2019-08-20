@@ -13,9 +13,7 @@
             <h2>Buscar produtos</h2>
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
-                    <form asp-area="Catalogo"                                               
-                          asp-controller="Home" 
-                          asp-action="Index">
+                    <form asp-area="Catalogo">
                         <input type="text" asp-for="@Model.Pesquisa" name="pesquisa"
                                class="form-control input-lg"
                                placeholder="categoria ou produto" />
