@@ -47,9 +47,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item05 - Modelos Delimitado
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasaDoCodigo.MVC", "Item05\CasaDoCodigo\CasaDoCodigo.MVC.csproj", "{BC7CD2B5-0503-4B42-87B9-5F09858F8111}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F41B8FED-2486-47F1-BC77-8CA9DB8E3788}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Roteiro", "Roteiro", "{F41B8FED-2486-47F1-BC77-8CA9DB8E3788}"
 	ProjectSection(SolutionItems) = preProject
-		Roteiro.md = Roteiro.md
+		Roteiro\Roteiro-1.md = Roteiro\Roteiro-1.md
+		Roteiro\Roteiro-2.md = Roteiro\Roteiro-2.md
 	EndProjectSection
 EndProject
 Global
