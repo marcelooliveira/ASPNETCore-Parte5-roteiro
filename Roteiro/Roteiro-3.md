@@ -21,6 +21,9 @@ Movendo BuscaProdutosViewModel para \Areas\Catalogo\Models\ViewModels:
 
 ## ViewComponent: Categorias
 
+A view principal da área de Catálogo exibe um conjunto de categorias de produtos. Essas categorias serão extraídas para um novo componente de exibição (View Component) chamado `CategoriasViewComponent`.
+
+
 *** arquivo: \Areas\Catalogo\Views\Home\Index.cshtml***
 
 ADICIONAR:
@@ -188,6 +191,9 @@ public class CategoriasViewComponent : ViewComponent
 
 ## ViewComponent: Carrossel
 
+O ViewComponent de categorias (`CategoriasViewComponent`) exibe um conjunto de carrosséis de produtos. Cada carrossel exibe todos os produtos da categoria em questão. O código razor desse carrossel será extraído para um novo componente de exibição (View Component) chamado `CarrosselViewComponent`.
+
+
 *** arquivo: \Areas\Catalogo\Views\Home\Components\Carrossel\Default.cshtml***
 
 ```csharp
@@ -275,6 +281,9 @@ public class CarrosselViewComponent : ViewComponent
 
 ## ViewComponent: CarrosselPagina
 
+O ViewComponent de carrossel (`CarrosselViewComponent`) exibe um conjunto de produtos de uma categoria determinada. Esses produtos do carrossel são mantidos em grupos de 4 produtos, chamados de páginas de carrossel. O código razor da página de carrossel será extraído para um novo componente de exibição (View Component) chamado `CarrosselPaginaViewComponent`.
+
+
 *** arquivo: \Areas\Catalogo\Views\Home\Components\CarrosselPagina\Default.cshtml***
 
 
@@ -349,6 +358,8 @@ public class CarrosselPaginaViewComponent : ViewComponent
 
 
 ## ViewComponent: ProdutoCard
+
+O ViewComponent de carrossel (`ProdutoCardViewComponent`) exibe os detalhes de um produto, incluindo sua descrição, preço e também o botão por onde o usuário adiciona o produto ao carrinho. Essas informações de um produto individual são exibidas num "cartão", ou "card", em inglês. O código razor do card de produto será extraído para um novo componente de exibição (View Component) chamado `ProdutoCardViewComponent`.
 
 *** arquivo: \Areas\Catalogo\Views\Home\Components\ProdutoCard\Default.cshtml***
 
