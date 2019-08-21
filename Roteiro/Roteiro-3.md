@@ -19,13 +19,11 @@ Um View Component `CategoriasViewComponent`, como todo View Component, consistir
 
 Assim como os controladores, um View Component pode ser uma classe simples em C#, mas você irá aproveitar melhor os métodos e as propriedades disponíveis com uma subclasse herdada da classe `ViewComponent`.
 
+
+Nossa primeira "cobaia" para esta aula sobre ViewComponents é a view principal da área de catálogo:
+
 *** arquivo: \Areas\Catalogo\Views\Home\Index.cshtml***
 
-ADICIONAR:
-
-@addTagHelper *, CasaDoCodigo.MVC
-
-REMOVER:
 ```csharp
 -@{
     var produtos = Model.Produtos;
@@ -54,7 +52,6 @@ REMOVER:
             }
             @for (int pagina = 0; pagina < paginas; pagina++)
             {
-
                 <div class="item @(pagina == 0 ? "active" : "")">
                     <div class="row">
                         @{
@@ -74,6 +71,19 @@ REMOVER:
     </div>
 }
 ```
+
+Como podemos perceber, essa view é bastante complexa. Ela contém:
+
+- O código C# para obter as categorias distintas a partir da lista de produtos
+- Um laço `foreach` para percorrer as categorias de produtos
+- Uma consulta para obter os produtos de uma determinada categoria
+- O código HTML para exibir o carrossel de produtos da uma categoria
+- O código C# para obter os produtos da categoria com paginação
+- O código C# para percorrer as páginas de produtos
+- O código HTML para varrer a lista de produtos e exibir os cards de produtos
+
+
+
 
 ADICIONAR:
 
