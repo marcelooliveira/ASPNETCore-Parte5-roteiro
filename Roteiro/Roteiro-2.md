@@ -169,7 +169,7 @@ Uma partial view é um arquivo de marcação .cshtml mantido dentro da pasta Vie
 
 No ASP.NET Core MVC, um ViewResult do controller é capaz de retornar uma view ou uma partial view. 
 
-Ao contrário da view do MVC ou renderização de página, uma partial view não executa _ViewStart.cshtml. Para obter mais informações sobre _ViewStart.cshtml, consulte Layout no ASP.NET Core.
+Ao contrário da view do MVC ou renderização de página, uma partial view não executa _ViewStart.cshtml. 
 
 Nomes de arquivos de partial view geralmente começam com um sublinhado (_). Essa convenção de nomenclatura não é obrigatória, mas ajuda a diferenciar visualmente as views parciais das views e das páginas.
 

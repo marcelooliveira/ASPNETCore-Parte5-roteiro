@@ -1,28 +1,23 @@
 ﻿# 3) View Components
 
-Movendo BuscaProdutosViewModel para \Areas\Catalogo\Models\ViewModels:
+## Vídeo 3.1. Criando o Primeiro View Component
 
-*** arquivo: \Areas\Catalogo\Models\ViewModels\BuscaProdutosViewModel.cs***
+Na última aula, aprendemos sobre as partial views, e como elas podem ser usadas para organizar melhor o código razor das páginas e facilitar a leitura e compreensão das views.
 
-```csharp
-﻿    public class BuscaProdutosViewModel
-{
-    public BuscaProdutosViewModel(List<Produto> produtos, string pesquisa)
-    {
-        Produtos = produtos;
-        Pesquisa = pesquisa;
-    }
+Ainda existem vários outros trechos de views da aplicação da Casa do Código que podem ser "quebrados" em arquivos menores, além daqueles que já criamos. Mas em vez de criarmos novas views parciais, vamos abordar uma nova técnica. Nesta aula, vamos aprender sobre um novo tipo de elemento fornecido pelo ASP.NET Core para organização e componentização de interfaces da aplicação: os Componentes de Exibição, ou ViewComponents.
 
-    public List<Produto> Produtos { get; }
-    public string Pesquisa { get; set; }
-}
-```
-
+Os ViewComponents são semelhantes às partial views. Eles dão um pouco mais de trabalho para serem criados, mas são muito mais eficientes. Agora vamos demonstrar a criação de um ViewComponent para a view do catálogo de produtos.
 
 ## ViewComponent: Categorias
 
 A view principal da área de Catálogo exibe um conjunto de categorias de produtos. Essas categorias serão extraídas para um novo componente de exibição (View Component) chamado `CategoriasViewComponent`.
 
+Um View Component `CategoriasViewComponent`, como todo View Component, consistirá de duas partes: 
+
+1. a classe (normalmente derivada de ViewComponent) e 
+2. o resultado que ele retorna (normalmente, uma view). 
+
+Assim como os controladores, um View Component pode ser uma classe simples em C#, mas você irá aproveitar melhor os métodos e as propriedades disponíveis com uma subclasse herdada da classe `ViewComponent`.
 
 *** arquivo: \Areas\Catalogo\Views\Home\Index.cshtml***
 
@@ -85,6 +80,9 @@ ADICIONAR:
 ```razor
 <vc:categorias produtos="@Model.Produtos"></vc:categorias>
 ```
+
+Note que no trecho acima não estamos passando um atributo "model", mas sim um parâmetro customizado chamado "produtos". Isso acontece porque os ViewComponents não usam o "model binding" e dependem apenas dos dados que fornecemos a eles.
+
 
 *** arquivo: \Areas\Catalogo\Models\ViewModels\CategoriasViewModel.cs***
 
@@ -186,8 +184,7 @@ public class CategoriasViewComponent : ViewComponent
 
 
 
-
-
+## Vídeo 3.2. ViewComponents Com Múltiplos Parâmetros
 
 ## ViewComponent: Carrossel
 
@@ -276,7 +273,7 @@ public class CarrosselViewComponent : ViewComponent
 
 
 
-
+## Vídeo 3.3. ViewComponent com Paginação
 
 
 ## ViewComponent: CarrosselPagina
@@ -354,7 +351,7 @@ public class CarrosselPaginaViewComponent : ViewComponent
 
 
 
-
+## Vídeo 3.4. Resumindo ViewComponents
 
 
 ## ViewComponent: ProdutoCard
@@ -410,22 +407,39 @@ public class ProdutoCardViewComponent : ViewComponent
 }
 ```
 
+Por final, vamos mover o a classe BuscaProdutosViewModel para a pasta da área de Catalogo, em  \Areas\Catalogo\Models\ViewModels:
+
+*** arquivo: \Areas\Catalogo\Models\ViewModels\BuscaProdutosViewModel.cs***
+
+```csharp
+﻿    public class BuscaProdutosViewModel
+{
+    public BuscaProdutosViewModel(List<Produto> produtos, string pesquisa)
+    {
+        Produtos = produtos;
+        Pesquisa = pesquisa;
+    }
+
+    public List<Produto> Produtos { get; }
+    public string Pesquisa { get; set; }
+}
+```
 
 
+## ViewComponents: Recapitulando
 
+Um ViewComponent:
 
+- Renderiza uma parte em vez de uma resposta contendo uma view inteira.
+- O ViewComponent pode ser testado com testes unitários. Ele inclui os mesmos benefícios de testabilidade e separação de interesses (princípio conhecido como "separation of concerns") e encontrados entre um controlador e uma view.
+- Pode ter parâmetros e uma lógica de negócios.
 
-
-
-
-
-
-
-
-
-
-
-
-
+Os ViewComponents destinam-se a qualquer momento em que há uma lógica de renderização reutilizável muito complexa para uma partial view. Alguns exemplos de aplicações do mundo real incluem:
+- Menus de navegação dinâmica
+- Painel de logon
+- Carrinho de compras de um e-commerce
+- Artigos publicados recentemente de um jornal
+- Conteúdo da barra lateral em um blog 
+- Um painel de logon que é renderizado em cada página e mostra os links para logoff ou logon, dependendo do estado de logon do usuário
 
 
