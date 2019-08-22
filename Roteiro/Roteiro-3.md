@@ -4,11 +4,18 @@
 
 Na última aula, aprendemos sobre as partial views, e como elas podem ser usadas para organizar melhor o código razor das páginas e facilitar a leitura e compreensão das views.
 
-Ainda existem vários outros trechos de views da aplicação da Casa do Código que podem ser "quebrados" em arquivos menores, além daqueles que já criamos. Mas em vez de criarmos novas views parciais, vamos abordar uma nova técnica. Nesta aula, vamos aprender sobre um novo tipo de elemento fornecido pelo ASP.NET Core para organização e componentização de interfaces da aplicação: os Componentes de Exibição, ou ViewComponents.
+Ainda existem vários outros trechos de views da aplicação da Casa do Código que podem ser "quebrados" em arquivos menores, além daqueles que já criamos. Mas em vez de criarmos novas views parciais, vamos abordar uma nova técnica alternativa. Nesta aula, vamos aprender sobre um novo tipo de elemento fornecido pelo ASP.NET Core para organização e componentização de interfaces da aplicação: os Componentes de Exibição, ou ViewComponents.
 
 Os ViewComponents são semelhantes às partial views. Eles dão um pouco mais de trabalho para serem criados, mas são muito mais eficientes. Agora vamos demonstrar a criação de um ViewComponent para a view do catálogo de produtos.
 
+Vamos identificar na view de Catálogo onde estão os elementos que podem ser extraídos para novos componentes:
+
+![View Catalogo Componentes](ViewCatalogoComponentes.png)
+
 ## ViewComponent: Categorias
+
+
+![View Catalogo Categorias](ViewCatalogoCategorias.png)
 
 A view principal da área de Catálogo exibe um conjunto de categorias de produtos. Essas categorias serão extraídas para um novo componente de exibição (View Component) chamado `CategoriasViewComponent`.
 
@@ -198,6 +205,8 @@ public class CategoriasViewComponent : ViewComponent
 
 ## ViewComponent: Carrossel
 
+![View Catalogo Carrossel](ViewCatalogoCarrossel.png)
+
 O ViewComponent de categorias (`CategoriasViewComponent`) exibe um conjunto de carrosséis de produtos. Cada carrossel exibe todos os produtos da categoria em questão. O código razor desse carrossel será extraído para um novo componente de exibição (View Component) chamado `CarrosselViewComponent`.
 
 
@@ -288,6 +297,9 @@ public class CarrosselViewComponent : ViewComponent
 
 ## ViewComponent: CarrosselPagina
 
+![View Catalogo Carrossel Pagina](ViewCatalogoCarrosselPagina.png)
+
+
 O ViewComponent de carrossel (`CarrosselViewComponent`) exibe um conjunto de produtos de uma categoria determinada. Esses produtos do carrossel são mantidos em grupos de 4 produtos, chamados de páginas de carrossel. O código razor da página de carrossel será extraído para um novo componente de exibição (View Component) chamado `CarrosselPaginaViewComponent`.
 
 
@@ -365,6 +377,8 @@ public class CarrosselPaginaViewComponent : ViewComponent
 
 
 ## ViewComponent: ProdutoCard
+
+![View Catalogo Produto Card](ViewCatalogoProdutoCard.png)
 
 O ViewComponent de carrossel (`ProdutoCardViewComponent`) exibe os detalhes de um produto, incluindo sua descrição, preço e também o botão por onde o usuário adiciona o produto ao carrinho. Essas informações de um produto individual são exibidas num "cartão", ou "card", em inglês. O código razor do card de produto será extraído para um novo componente de exibição (View Component) chamado `ProdutoCardViewComponent`.
 
