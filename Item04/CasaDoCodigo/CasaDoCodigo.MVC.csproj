@@ -117,6 +117,7 @@
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
     <None Include="Areas\Pedido\Views\Home\Index.cshtml" />
     <None Include="Areas\Pedido\Views\Home\_Navegacao.cshtml" />
+    <None Include="Areas\_ViewStart.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
