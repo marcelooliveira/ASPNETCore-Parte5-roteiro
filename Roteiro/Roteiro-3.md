@@ -14,25 +14,14 @@ Vamos identificar na view de Catálogo onde estão os elementos que podem ser ex
 
 ## ViewComponent: Categorias
 
+Nossa primeira "cobaia" para esta aula sobre ViewComponents é a view principal da área de catálogo:
 
 ![View Catalogo Categorias](ViewCatalogoCategorias.png)
-
-A view principal da área de Catálogo exibe um conjunto de categorias de produtos. Essas categorias serão extraídas para um novo componente de exibição (View Component) chamado `CategoriasViewComponent`.
-
-Um View Component `CategoriasViewComponent`, como todo View Component, consistirá de duas partes: 
-
-1. a classe (normalmente derivada de ViewComponent) e 
-2. o resultado que ele retorna (normalmente, uma view). 
-
-Assim como os controladores, um View Component pode ser uma classe simples em C#, mas você irá aproveitar melhor os métodos e as propriedades disponíveis com uma subclasse herdada da classe `ViewComponent`.
-
-
-Nossa primeira "cobaia" para esta aula sobre ViewComponents é a view principal da área de catálogo:
 
 *** arquivo: \Areas\Catalogo\Views\Home\Index.cshtml***
 
 ```csharp
--@{
+@{
     var produtos = Model.Produtos;
 
     var categorias =
@@ -89,17 +78,45 @@ Como podemos perceber, essa view é bastante complexa. Ela contém:
 - O código C# para percorrer as páginas de produtos
 - O código HTML para varrer a lista de produtos e exibir os cards de produtos
 
+Vamos "quebrar" então essa view em diversas partes, começando com o elemento mais "externo", que é o que renderiza as categorias de produtos. Esse trecho que exibe categorias será extraído para um novo componente de exibição (View Component) chamado `CategoriasViewComponent`.
+
+O View Component `CategoriasViewComponent` consistirá de três arquivos: 
+
+1. a classe de component (normalmente derivada de ViewComponent) ,
+2. a classe ViewModel contendo o modelo dedicado a esse ViewComponent
+3. o documento razor que o componente retorna.
+
+Assim como os controllers, um View Component pode ser uma classe simples em C#, mas você irá aproveitar melhor os métodos e as propriedades disponíveis com uma subclasse herdada da classe `ViewComponent`.
 
 
+### 1) a classe do ViewComponent
 
-ADICIONAR:
+O novo arquivo CategoriasViewComponent conterá o código C# para obter as categorias distintas a partir da lista de produtos:
 
-```razor
-<vc:categorias produtos="@Model.Produtos"></vc:categorias>
+*** arquivo: \Areas\Catalogo\ViewComponents\CategoriasViewComponent.cs***
+
+```csharp
+public class CategoriasViewComponent : ViewComponent
+{
+    const int TamanhoPagina = 4;
+    public CategoriasViewComponent()
+    {
+    }
+
+    public IViewComponentResult Invoke(List<Produto> produtos)
+    {
+        var categorias = produtos
+            .Select(p => p.Categoria)
+            .Distinct()
+            .ToList();
+        return View("Default", new CategoriasViewModel(categorias, produtos, TamanhoPagina));
+    }
+}
 ```
 
-Note que no trecho acima não estamos passando um atributo "model", mas sim um parâmetro customizado chamado "produtos". Isso acontece porque os ViewComponents não usam o "model binding" e dependem apenas dos dados que fornecemos a eles.
+### 2) a classe ViewModel 
 
+Essa classe contém o modelo dedicado ao ViewComponent e transportará os dados de categorias e produtos
 
 *** arquivo: \Areas\Catalogo\Models\ViewModels\CategoriasViewModel.cs***
 
@@ -124,28 +141,9 @@ public class CategoriasViewModel
 }
 ```
 
-*** arquivo: \Areas\Catalogo\ViewComponents\CategoriasViewComponent.cs***
+### 3) o documento razor 
 
-
-```csharp
-public class CategoriasViewComponent : ViewComponent
-{
-    const int TamanhoPagina = 4;
-    public CategoriasViewComponent()
-    {
-    }
-
-    public IViewComponentResult Invoke(List<Produto> produtos)
-    {
-        var categorias = produtos
-            .Select(p => p.Categoria)
-            .Distinct()
-            .ToList();
-        return View("Default", new CategoriasViewModel(categorias, produtos, TamanhoPagina));
-    }
-}
-```
-
+O novo arquivo cshtml não terá nenhum código C# além do necessário para percorrer a lista de categorias. O restante do arquivo será composto de código HTML ou razor.
 
 *** arquivo: \Areas\Catalogo\Views\Home\Components\Categorias\Default.cshtml***
 
@@ -157,10 +155,24 @@ public class CategoriasViewComponent : ViewComponent
 <div class="container">
     @foreach (var categoria in Model.Categorias)
     {
-        <vc:carrossel categoria="@categoria" produtos="@Model.Produtos" tamanho-pagina="@Model.TamanhoPagina"></vc:carrossel>
+        <!--AQUI VAI O CÓDIGO EXTRAÍDO DA VIEW PRINCIPAL DE CATÁLOGO-->
     }
 </div>
 ```
+
+### 4) tag helper de ViewCompoment
+
+Agora precisamos substituir o código extraído da view principal por uma tag helper que referencia o novo ViewComponent de categorias:
+
+Vamos extrair esse trecho acima para um novo componente, que chamaremos de **"Categorias"**. Esse arquivo será salvo em \Areas\Catalogo\Views\Home\Components\Categorias\Default.cshtml.
+
+ADICIONAR:
+
+```razor
+<vc:categorias produtos="@Model.Produtos"></vc:categorias>
+```
+
+Note que no trecho acima não estamos passando um atributo "model", mas sim um parâmetro customizado chamado "produtos". Isso acontece porque os ViewComponents não usam o "model binding" e dependem apenas dos dados que fornecemos a eles.
 
 
 
@@ -284,6 +296,29 @@ public class CarrosselViewComponent : ViewComponent
     }
 }
 ```
+
+
+*** arquivo: \Areas\Catalogo\Views\Home\Components\Categorias\Default.cshtml***
+
+```csharp
+﻿@using CasaDoCodigo.Areas.Catalogo.Models.ViewModels;
+@addTagHelper *, CasaDoCodigo.MVC
+@model CategoriasViewModel
+
+<div class="container">
+    @foreach (var categoria in Model.Categorias)
+    {
+        <vc:carrossel categoria="@categoria" produtos="@Model.Produtos" tamanho-pagina="@Model.TamanhoPagina"></vc:carrossel>
+    }
+</div>
+```
+
+
+
+
+
+
+
 
 
 
@@ -447,6 +482,26 @@ Por final, vamos mover o a classe BuscaProdutosViewModel para a pasta da área d
     public List<Produto> Produtos { get; }
     public string Pesquisa { get; set; }
 }
+```
+
+*** arquivo: \Areas\Catalogo\Views\Home\Components\CarrosselPagina\Default.cshtml***
+
+
+```csharp
+﻿@using CasaDoCodigo.Areas.Catalogo.Models.ViewModels
+@addTagHelper *, CasaDoCodigo.MVC
+@model CarrosselPaginaViewModel
+
+<div class="item @(Model.IndicePagina == 0 ? "active" : "")">
+    <div class="row">
+        @{
+            foreach (var produto in Model.Produtos)
+            {
+                <vc:produto-card produto="@produto"></vc:produto-card>
+            }
+        }
+    </div>
+</div>
 ```
 
 
