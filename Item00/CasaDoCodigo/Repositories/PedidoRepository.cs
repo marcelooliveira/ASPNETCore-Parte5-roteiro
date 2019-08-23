@@ -1,4 +1,5 @@
 ﻿using CasaDoCodigo.Areas.Identity.Data;
+using CasaDoCodigo.Data;
 using CasaDoCodigo.Models;
 using CasaDoCodigo.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,7 @@ namespace CasaDoCodigo.Repositories
         private readonly ICadastroRepository cadastroRepository;
 
         public PedidoRepository(IConfiguration configuration,
-            ApplicationContext contexto,
+            ApplicationDbContext contexto,
             IHttpContextAccessor contextAccessor,
             UserManager<AppIdentityUser> userManager,
             IHttpHelper sessionHelper,

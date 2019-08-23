@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace CasaDoCodigo.Models
@@ -17,8 +18,10 @@ namespace CasaDoCodigo.Models
         public int Quantidade { get; private set; }
         [Required]
         [DataMember]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal PrecoUnitario { get; private set; }
         [DataMember]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Subtotal => Quantidade * PrecoUnitario;
 
         public ItemPedido()

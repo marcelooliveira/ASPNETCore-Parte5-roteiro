@@ -8,13 +8,9 @@
 
   <ItemGroup>
     <Compile Remove="Areas\**" />
-    <Compile Remove="Migrations\AppIdentity\**" />
     <Content Remove="Areas\**" />
-    <Content Remove="Migrations\AppIdentity\**" />
     <EmbeddedResource Remove="Areas\**" />
-    <EmbeddedResource Remove="Migrations\AppIdentity\**" />
     <None Remove="Areas\**" />
-    <None Remove="Migrations\AppIdentity\**" />
   </ItemGroup>
 
   <ItemGroup>

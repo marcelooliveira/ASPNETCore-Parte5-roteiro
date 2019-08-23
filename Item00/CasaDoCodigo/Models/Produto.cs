@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CasaDoCodigo.Models
 {
@@ -8,6 +9,8 @@ namespace CasaDoCodigo.Models
         {
 
         }
+            
+        public int CategoriaId { get; private set; }
 
         [Required]
         public Categoria Categoria { get; private set; }
@@ -16,6 +19,7 @@ namespace CasaDoCodigo.Models
         [Required]
         public string Nome { get; private set; }
         [Required]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Preco { get; private set; }
 
         public Produto(string codigo, string nome, decimal preco, Categoria categoria)

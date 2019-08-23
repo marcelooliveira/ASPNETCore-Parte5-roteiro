@@ -1,4 +1,5 @@
-﻿using CasaDoCodigo.Repositories;
+﻿using CasaDoCodigo.Data;
+using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,24 +33,31 @@ namespace CasaDoCodigo
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-            string connectionString = Configuration.GetConnectionString("Default");
+            ConfigurarContexto<ApplicationDbContext>(services, "Default");
 
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(connectionString)
-            );
+            ConfigurarDI(services);
 
+            services.AddAuthentication();
+        }
+
+        private static void ConfigurarDI(IServiceCollection services)
+        {
             services.AddTransient<IDataService, DataService>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IHttpHelper, HttpHelper>();
             services.AddTransient<IProdutoRepository, ProdutoRepository>();
             services.AddTransient<IPedidoRepository, PedidoRepository>();
             services.AddTransient<ICadastroRepository, CadastroRepository>();
-
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-            services.AddAuthentication();
         }
 
+        private void ConfigurarContexto<T>(IServiceCollection services, string nomeConexao) where T: DbContext
+        {
+            string connectionString = Configuration.GetConnectionString(nomeConexao);
+
+            services.AddDbContext<T>(options =>
+                options.UseSqlServer(connectionString)
+            );
+        }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             IServiceProvider serviceProvider)

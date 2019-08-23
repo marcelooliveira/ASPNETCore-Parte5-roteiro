@@ -1,4 +1,5 @@
-﻿using CasaDoCodigo.Models;
+﻿using CasaDoCodigo.Data;
+using CasaDoCodigo.Models;
 using CasaDoCodigo.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,7 @@ namespace CasaDoCodigo.Repositories
     {
         static List<Produto> listaProdutos;
         public ProdutoRepository(IConfiguration configuration,
-            ApplicationContext contexto) : base(configuration, contexto)
+            ApplicationDbContext contexto) : base(configuration, contexto)
         {
         }
 
