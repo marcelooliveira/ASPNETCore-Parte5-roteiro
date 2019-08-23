@@ -20,7 +20,9 @@ public class CatalogoDbContext : DbContext
 }
 ```
 
-## Trabalhando Com Mais de Um Contexto por Aplicação
+> Observação: O construtor `CatalogoDbContext` está usando a versão não-genérica do `DbContextOptions`, mas o uso da versão não-genérica não é recomendado para aplicativos com vários tipos de contexto.
+
+Vamos trocar o tipo do parâmetro `DbContextOptions` por `DbContextOptions<CatalogoDbContext>`.
 
 ```csharp
     public CatalogoDbContext(DbContextOptions<CatalogoDbContext> options)
@@ -30,10 +32,11 @@ public class CatalogoDbContext : DbContext
 }
 ```
 
+O método OnModelCreating precisa definir as entidades `Categoria` e `Produto`.
+
 ```csharp
 protected override void OnModelCreating(ModelBuilder builder)
 {
-
     base.OnModelCreating(builder);
 
     builder.Entity<Categoria>(b =>
@@ -45,14 +48,54 @@ protected override void OnModelCreating(ModelBuilder builder)
     {
         b.HasKey(t => t.Id);
     });
-    builder.Entity<Produto>();
 }
 ```
+
+
+```csharp
+private List<Livro> GetLivros()
+{
+    var json = File.ReadAllText("data/livros.json");
+    return JsonConvert.DeserializeObject<List<Livro>>(json);
+}
+```
+
+
+
+```csharp
+private IEnumerable<Produto> GetProdutos()
+{
+    var livros = GetLivros();
+
+    var categorias = livros
+            .Select((l) => l.Categoria)
+            .Distinct()
+            .Select((nomeCategoria, i) =>
+            {
+                var c = new Categoria(nomeCategoria);
+                c.Id = i + 1;
+                return c; });
+
+    var produtos =
+        (from livro in livros
+        join categoria in categorias
+            on livro.Categoria equals categoria.Nome
+        select new Produto(livro.Codigo, livro.Nome, livro.Preco, categoria))
+        .Select((p, i) =>
+            {
+                p.Id = i + 1;
+                return p;
+            })
+        .ToList();
+
+    return produtos;
+}
+```
+
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder builder)
 {
-
     base.OnModelCreating(builder);
 
     var produtos = GetProdutos();
@@ -66,7 +109,6 @@ protected override void OnModelCreating(ModelBuilder builder)
     {
         b.HasKey(t => t.Id);
     });
-    builder.Entity<Produto>();
 }
 ```
 
@@ -89,7 +131,6 @@ protected override void OnModelCreating(ModelBuilder builder)
     {
         b.HasKey(t => t.Id);
     });
-    builder.Entity<Produto>();
 }
 ```
 
@@ -124,7 +165,6 @@ protected override void OnModelCreating(ModelBuilder builder)
                 }
             ));
     });
-    builder.Entity<Produto>();
 }
 ```
 
@@ -159,7 +199,6 @@ protected override void OnModelCreating(ModelBuilder builder)
                 }
             ));
     });
-    builder.Entity<Produto>();
 }
 ```
 
@@ -227,41 +266,6 @@ public class CatalogoDbContext : DbContext
                     }
                 ));
         });
-        builder.Entity<Produto>();
-    }
-
-    private IEnumerable<Produto> GetProdutos()
-    {
-        var livros = GetLivros();
-
-        var categorias = livros
-                .Select((l) => l.Categoria)
-                .Distinct()
-                .Select((nomeCategoria, i) =>
-                {
-                    var c = new Categoria(nomeCategoria);
-                    c.Id = i + 1;
-                    return c; });
-
-        var produtos =
-            (from livro in livros
-            join categoria in categorias
-                on livro.Categoria equals categoria.Nome
-            select new Produto(livro.Codigo, livro.Nome, livro.Preco, categoria))
-            .Select((p, i) =>
-                {
-                    p.Id = i + 1;
-                    return p;
-                })
-            .ToList();
-
-        return produtos;
-    }
-
-    private List<Livro> GetLivros()
-    {
-        var json = File.ReadAllText("livros.json");
-        return JsonConvert.DeserializeObject<List<Livro>>(json);
     }
 }
 
