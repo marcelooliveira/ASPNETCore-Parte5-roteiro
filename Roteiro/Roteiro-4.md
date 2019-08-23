@@ -1,5 +1,17 @@
 ﻿# 4) Isolando Contextos
 
+Atualmente, os arquivos de dados e de contexto do Entity Framework Core da aplicação da Casa do Código estão todos contidos na pasta \Data.
+
+![Folder Data](FolderData.png)
+
+Como discutimos no início deste curso, as mudanças que estamos realizando visam permitir que as alterações feitas em uma única área da aplicação não afetem os demais módulos. Isso requer também o isolamento de bancos de dados. 
+
+Como estamos separando vários aspectos do catálogo em uma área dedicada, vamos começar a mover também os dados e o código necessário para a criação de banco de dados, tabelas e dados iniciais do catálogo de produtos para a pasta /Areas/Catalogo/Data.
+
+![Area Catalogo Data](AreaCatalogoData.png)
+
+Desejamos, no final desta aula, ter dois bancos de dados de negócios: a base de dados atual, CasaDoCodigo, e um novo banco de dados dedicado ao catálogo de produtos (CasaDoCodigo.Catalogo).
+
 ## Criando Um Novo Contexto para o Catálogo
 
 > arquivo: \CasaDoCodigo\Areas\Catalogo\Data\CatalogoDbContext.cs
