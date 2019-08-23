@@ -29,5 +29,11 @@ namespace CasaDoCodigo.Models
             this.Preco = preco;
             this.Categoria = categoria;
         }
+
+        public Produto(int id, string codigo, string nome, decimal preco, Categoria categoria)
+    : this(codigo, nome, preco, categoria)
+        {
+            Id = id;
+        }
     }
 }
