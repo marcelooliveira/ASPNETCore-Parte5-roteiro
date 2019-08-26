@@ -1,8 +1,10 @@
 ﻿# 4) Isolando Contextos
 
+## Vídeo 4.1 - Criando um Novo Contexto
+
 ### Por que isolar contextos?
 
-Atualmente, os arquivos de dados e de contexto do Entity Framework Core da aplicação da Casa do Código estão todos contidos na pasta \Data do projeto.
+Atualmente, os arquivos de dados e de contexto do Entity Framework Core da aplicação da Casa do Código estão todos contidos na pasta _**\Data**_ do projeto.
 
 ![Folder Data](FolderData.png)
 
@@ -14,7 +16,7 @@ Como estamos separando vários aspectos do catálogo em uma área dedicada, vamo
 
 Desejamos, no final desta aula, ter dois bancos de dados de negócios: a base de dados atual, CasaDoCodigo, e um novo banco de dados dedicado ao catálogo de produtos (CasaDoCodigo.Catalogo).
 
-## Criando Um Novo Contexto para o Catálogo
+### Criando Um Novo Contexto para o Catálogo
 
 Atualmente temos apenas uma classe para o contexto do EF Core para as entidades de negócio da aplicação: `ApplicationDbContext`.
 
@@ -74,6 +76,8 @@ protected override void OnModelCreating(ModelBuilder builder)
     });
 }
 ```
+
+## Vídeo 4.2 - Obtendo Dados Iniciais
 
 Agora precisamos popular tanto a nova tabela de categorias quanto a tabela de produtos. Já estamos fazendo isso para o banco de dados original, porém desta vez vamos preencher as categorias e produtos de um jeito diferente.
 
@@ -287,6 +291,8 @@ protected override void OnModelCreating(ModelBuilder builder)
 }
 ```
 
+## Vídeo 4.3 - Propagação de Dados
+
 Agora vamos começar a inserir esses dados de produtos e categorias no banco de dados.
 
 O nome do procedimento de criar os dados iniciais é **propagação de dados**, ou **data seeding** em inglês.
@@ -316,9 +322,9 @@ protected override void OnModelCreating(ModelBuilder builder)
 }
 ```
 
-Note acima como foi fácil usar o método HasData.
+Note acima como foi fácil usar o método `HasData()`.
 
-Agora, vamos fazer usar HasData() para inserir produtos iniciais. Desta vez, também precisamos associar o Id da categoria de cada produto:
+Agora, vamos fazer usar `HasData()` para inserir produtos iniciais. Desta vez, também precisamos associar o Id da categoria de cada produto:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder builder)
@@ -354,7 +360,9 @@ protected override void OnModelCreating(ModelBuilder builder)
 }
 ```
 
-Ainda falta instruir a nossa aplicação para utilizar esse novo contexo de catálogo. Vamos fazer isso modificando o arquivo de configuração appsettings.json para inserir uma nova string de conexão para um banco de dados específico para o catálogo:
+## Vídeo 4.4 - Criando um Novo Banco de Dados
+
+Ainda falta instruir a nossa aplicação para utilizar esse novo contexo de catálogo. Vamos fazer isso modificando o arquivo de configuração `appsettings.json` para inserir uma nova string de conexão para um banco de dados específico para o catálogo:
 
 > arquivo: \CasaDoCodigo\appsettings.json
 
@@ -364,7 +372,7 @@ Ainda falta instruir a nossa aplicação para utilizar esse novo contexo de cat�
 
 Agora modificamos a classe Startup para configurar o novo contexto CatalogoDbContext no "pipeline" da aplicação:
 
-## Configurando o Novo Contexto
+### Configurando o Novo Contexto
 
 > arquivo: \Item04\CasaDoCodigo\Startup.cs
 
@@ -374,7 +382,7 @@ ConfigurarContexto<CatalogoDbContext>(services, "Catalogo");
 ```
 
 
-## Criando e Aplicando a Migração
+### Criando e Aplicando a Migração
 
 Agora vamos criar uma nova migração, explicitando o nome da classe do novo contexto e definindo a pasta que irá conter as migrações (Areas/Catalogo/Data/):
 
@@ -385,10 +393,12 @@ Basta agora rodar a atualização para criar o banco de dados de catálogo com o
 > PM> Update-Database -verbose -Context CatalogoDbContext 
 
 
-## Conferindo o Novo Banco de Dados
+### Conferindo o Novo Banco de Dados
 
-Agora vamos abrir o menu View > SQL Server Object Explorer para verificar a nova base de dados de catálogo, suas tabelas e colunas geradas a partir de nosso modelo:
+Bom, agora vamos abrir o menu View > SQL Server Object Explorer para verificar a nova base de dados de catálogo, suas tabelas e colunas geradas a partir da migração:
 
 ![Casa Do Codigo.Catalogo](CasaDoCodigo.Catalogo.png)
 
-Sucesso!
+Como podemos ver, além do banco de dados CasaDoCodigo, agora temos também o novo banco de dados CasaDoCodigo.Catalogo, contendo apenas as tabelas `Produto` e `Categoria`. Essas tabelas fazem parte de ambos os bancos de dados. Esse tipo de duplicação pode parecer ruim, mas na verdade esse tipo de separação permite que que a base de dados da área de Catálogo possa evoluir de forma independente das demais áreas. A ideia é que as modificações no banco de dados do Catalogo não afetem outros bancos de dados.
+
+Na próxima aula veremos como isolar também o modelo do catálogo, que funcionará de forma independente dos modelos das outras áreas da aplicação.
