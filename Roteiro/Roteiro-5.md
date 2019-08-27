@@ -2,11 +2,11 @@
 
 ## Vídeo 5.1 - Novo Modelos de Catálogo
 
-Na última aula, além do banco de dados CasaDoCodigo, passamos a contar também com o novo banco de dados CasaDoCodigo.Catalogo, contendo apenas as tabelas `Produto` e `Categoria`. Essas tabelas fazem parte de ambos os bancos de dados. Esse tipo de duplicação pode parecer ruim, mas na verdade esse tipo de separação permite que que a base de dados da área de Catálogo possa evoluir de forma independente das demais áreas. A ideia é que as modificações no banco de dados do Catalogo não afetem outros bancos de dados.
+Na última aula, além do banco de dados CasaDoCodigo, passamos a contar também com o novo banco de dados CasaDoCodigo.Catalogo, contendo apenas as tabelas `Produto` e `Categoria`. Essas tabelas agora existem em ambos os bancos de dados. Esse tipo de duplicação pode parecer ruim, mas na verdade esse tipo de separação permite que que a base de dados da área de Catálogo possa evoluir de forma independente das demais áreas. A ideia é que as modificações no banco de dados do Catalogo não afetem outros bancos de dados.
 
 Nesta aula veremos como isolar também o modelo do catálogo, que funcionará de forma independente dos modelos das outras áreas da aplicação.
 
-Copiamos as classes do modelo da pasta /Models/ para a nova pasta /Areas/Catalogo/Models :
+Vamos copiar as classes do modelo da pasta /Models/ para a nova pasta /Areas/Catalogo/Models :
 
 ### Classes copiadas para Área de Catálogo
 
@@ -17,7 +17,7 @@ Copiamos as classes do modelo da pasta /Models/ para a nova pasta /Areas/Catalog
 * \Areas\Catalogo\Models\Categoria.cs
 * \Areas\Catalogo\Models\Produto.cs
 
-Com essa mudança, as classes e views da área de Catalogo precisam referenciar as novas classes do modelo:
+Com essa mudança, as classes e views da área de Catalogo precisam referenciar (isto é, apontar para) as novas classes do modelo da área:
 
 ### Mudar o namespace de CasaDoCodigo.Models para CasaDoCodigo.Areas.Catalogo.Models
 
@@ -38,6 +38,8 @@ Com essa mudança, as classes e views da área de Catalogo precisam referenciar 
 ```csharp
 using CasaDoCodigo.Areas.Catalogo.Models;
 ```
+
+Outra mudança é na classe base de repositório. Vamos ter que mudar a classe do contexto de ApplicationDbContext para CatalogoDbContext, para que o repositório de produtos da área de Catálogo possa acessar o banco de dados a partir do contexto da própria área de catálogo.
 
 
 
@@ -61,6 +63,8 @@ public abstract class BaseRepository<T> where T : BaseModel
 }
 ```
 
+Agora vamos mudar também o namespace da classe de repositório acessada pelo controller MVC da área de catálogo, apontando para o repositório da área:
+
 ### Mudar o namespace de CasaDoCodigo.Data.Repositories para CasaDoCodigo.Areas.Catalogo.Data.Repositories
 
 \Areas\Catalogo\Controllers\HomeController.cs
@@ -68,11 +72,8 @@ public abstract class BaseRepository<T> where T : BaseModel
 using CasaDoCodigo.Areas.Catalogo.Data.Repositories;
 ```
 
-\Areas\Catalogo\Data\CatalogoDbContext.cs
-```csharp
-﻿using CasaDoCodigo.Models;
-﻿using CasaDoCodigo.Areas.Catalogo.Models;
-```
+
+Por último, vamos modificar a classe `Startup` do projeto, para configurar a injeção de dependência para ambas as classes de repositório de produtos: tanto a classe `ProdutoRepository` que atende a aplicação como um todo quanto a classe `ProdutoRepository` que atende somente a área de Catálogo.
 
 
 ### Registrando Injeção de Dependência para 2 Repositórios de Produtos
@@ -87,3 +88,7 @@ services.AddTransient<Repositories.IProdutoRepository
 services.AddTransient<Areas.Catalogo.Data.Repositories.IProdutoRepository
 , Areas.Catalogo.Data.Repositories.ProdutoRepository>();
 ```
+
+Note quem ambas as classes foram registradas como *transientes* (temporária), isto é, tal como explicamos no início desta sequência de cursos, cada vez que um objeto transiente (temporário) é requisitada por um objeto, uma nova instância é automaticamente criada.
+
+
