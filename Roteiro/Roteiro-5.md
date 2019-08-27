@@ -86,16 +86,71 @@ services.AddTransient<Areas.Catalogo.Data.Repositories.IProdutoRepository
 , Areas.Catalogo.Data.Repositories.ProdutoRepository>();
 ```
 
-Note quem ambas as classes foram registradas como *transientes* (temporária), isto é, tal como explicamos no início desta sequência de cursos, cada vez que um objeto transiente (temporário) é requisitada por um objeto, uma nova instância é automaticamente criada.
+Note quem ambas as classes `ProdutoRepository` foram registradas como *transientes* (temporária), isto é, tal como explicamos no início desta sequência de cursos, cada vez que um objeto transiente (temporário) é requisitada por um objeto, uma nova instância é automaticamente criada.
 
-## Vídeo 5.3 - Removendo produto e categoria
+## Vídeo 5.3 - Removendo produto e categoria do Modelo Principal
+
+Podemos demonstrar como os modelos diferentes podem conviver em harmonia dentro da nossa aplicação.
+
+A partir de agora, vamos começar a lidar com as entidades categoria e produto apenas na área de catálogo. Ao mesmo tempo, vamos modificar o modelo geral da aplicação (que está fora da área de catálogo) para remover as entidades de produto e categoria.
+
+Remova os arquivos:
+
+- \Models\Produto.cs
+- \Models\Categoria.cs
+
+> arquivo: \Models\ItemPedido.cs
 
 
+Porém, o que vamos fazer com o ItemPedido, que depende da entidade Produto? Vamos substituir a referência ao objeto `Produto` por dois campos: `ProdutoCodigo` e `ProdutoNome`.
 
+Substituir:
 
-> arquivo: \ApplicationContext.cs
+```csharp
+public Produto Produto { get; private set; }
+```
 
-remover:
+Por:
+
+```csharp
+public string ProdutoCodigo { get; private set; }
+[Required]
+[DataMember]
+public string ProdutoNome { get; private set; }
+```
+
+Além disso, temos que modificar o construtor da classe `ItemPedido`:
+
+Substituir:
+
+```csharp
+public ItemPedido(Pedido pedido, Produto produto, int quantidade, decimal precoUnitario)
+```
+
+Por:
+
+```csharp
+public ItemPedido(Pedido pedido, string produtoCodigo, string produtoNome, int quantidade, decimal precoUnitario)
+```
+
+Substituir:
+
+```csharp
+Produto = produto;
+```
+
+Por:
+
+```csharp
+ProdutoCodigo = produtoCodigo;
+ProdutoNome = produtoNome;
+```
+
+Agora vamos modificar o contexto EF Core principal da aplicação (ApplicationDbContext) para eliminar as 2 entidades Categoria e Produto que foram removidas do modelo:
+
+> arquivo: \ApplicationDbContext.cs
+
+Vamos remover estas 3 linhas:
 
 ```csharp
 modelBuilder.Entity<Categoria>().HasKey(t => t.Id);
@@ -106,6 +161,21 @@ modelBuilder.Entity<Produto>().HasKey(t => t.Id);
 modelBuilder.Entity<ItemPedido>().HasOne(t => t.Produto);
 ```
 
+Vamos aproveitar para remover também a propagação (seeding) automática da tabela de produtos, que é feita no final da classe Startup:
+
+> arquivo: \Startup.cs
+
+remover:
+
+```csharp
+var dataService = serviceProvider.GetRequiredService<IDataService>();
+dataService.InicializaDBAsync(serviceProvider).Wait();
+```
+
+
+### Vídeo 5.4 : Atualizar as views
+
+Nossas views das áreas de Carrinho e de Pedido estão apontando para o código e o nome do objeto `Produto` através do objeto `ItemPedido`. Como este não possui mais uma referência para o `Produto`, vamos acessar diretamente as propriedades `ProdutoCodigo` e `ProdutoNome` do `ItemPedido`:  
 
 > arquivo: \Areas\Carrinho\Views\Home\Index.cshtml
 
@@ -147,53 +217,16 @@ por
 <div>@item.ProdutoNome</div>
 ```
 
-**Rodar as migrações:**
 
->PM> Add-Migration "ModeloSemProduto" -Context ApplicationDbContext
->PM> Update-Database -verbose -Context ApplicationDbContext 
 
-> arquivo: \Models\ItemPedido.cs
 
-Substituir:
 
-```csharp
-public Produto Produto { get; private set; }
-```
 
-Por:
 
-```csharp
-public string ProdutoCodigo { get; private set; }
-[Required]
-[DataMember]
-public string ProdutoNome { get; private set; }
-```
+## Vídeo 5.5 : Adaptando o repositório de Pedido
 
-Substituir:
-
-```csharp
-public ItemPedido(Pedido pedido, Produto produto, int quantidade, decimal precoUnitario)
-```
-
-Por:
-
-```csharp
-public ItemPedido(Pedido pedido, string produtoCodigo, string produtoNome, int quantidade, decimal precoUnitario)
-```
-
-Substituir:
-
-```csharp
-Produto = produto;
-```
-
-Por:
-
-```csharp
-ProdutoCodigo = produtoCodigo;
-ProdutoNome = produtoNome;
-```
-
+Como as entidades Categorias e Produtos não estão mais no modelo principal, o repositório PedidoRepository terá que acessar produtos através da classe `ProdutoRepository`. 
+ 
 > arquivo: \Repositories\PedidoRepository.cs
 
 Incluir o campo, parâmetro e inicialização para o repositório de produtos:
@@ -253,12 +286,6 @@ remover:
 remover:
 
 ```csharp
-services.AddTransient<IDataService, DataService>();
-```
-
-remover:
-
-```csharp
 services.AddTransient<Repositories.IProdutoRepository, Repositories.ProdutoRepository>();
 services.AddTransient<Areas.Catalogo.Data.Repositories.IProdutoRepository, Areas.Catalogo.Data.Repositories.ProdutoRepository>();
 ```
@@ -269,9 +296,33 @@ adicionar:
 services.AddTransient<IProdutoRepository, ProdutoRepository>();
 ```
 
-remover:
 
-```csharp
-var dataService = serviceProvider.GetRequiredService<IDataService>();
-dataService.InicializaDBAsync(serviceProvider).Wait();
-```
+Agora vamos Criar uma migração para remover as tabelas Produtos e Categorias do banco de dados principal da aplicação (CasaDoCodigo). Com isso, apenas o banco de dados CasaDoCodigo.Catalogo conterá tais tabelas.
+
+>PM> Add-Migration
+
+Essa migração se chamará "ModeloSemProduto"...
+
+>PM> Add-Migration "ModeloSemProduto"
+
+... e afetará apenas o contexto principal ApplicationDbContext
+
+>PM> Add-Migration "ModeloSemProduto" -Context ApplicationDbContext
+
+Criando essa migração, agora podemos rodar o comando para aplicar as alterações do modelo no banco de dados, com o método Update-Database...
+
+>PM> Update-Database -verbose
+
+... afetando apenas o contexto principal ApplicationDbContext
+
+>PM> Update-Database -verbose -Context ApplicationDbContext 
+
+Podemos verifiar agora na janela do SQL Server Object Explorer que essa migração removeu com sucesso as tabelas Categorias e Produtos do banco de dados principal da aplicação:
+
+![CasaDoCodigo SemProdutoCategoria](CasaDoCodigo_SemProdutoCategoria.png)
+
+Esse isolamento de modelos é um conceito mais conhecido como Modelos Delimitados ou Bounded Contexts. É um conceito usado em DDD (Domain Driven Design) que sugere separar o domínio da aplicação um diferentes subdomínios, um para cada área de negócios, de forma semelhante ao que fizemos nestas duas últimas aulas.
+
+Para saber mais sobre DDD e Modelos Delimitados, dê uma olhada neste artigo do InfoQ:
+
+https://www.infoq.com/br/news/2019/07/bounded-context-eric-evans/
