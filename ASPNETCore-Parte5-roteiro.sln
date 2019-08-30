@@ -53,6 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Roteiro", "Roteiro", "{F41B
 		Roteiro\Roteiro-2.md = Roteiro\Roteiro-2.md
 		Roteiro\Roteiro-3.md = Roteiro\Roteiro-3.md
 		Roteiro\Roteiro-4.md = Roteiro\Roteiro-4.md
+		Roteiro\Roteiro-5.md = Roteiro\Roteiro-5.md
 	EndProjectSection
 EndProject
 Global
